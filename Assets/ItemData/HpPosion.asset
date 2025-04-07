@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: HpPosion
   m_EditorClassIdentifier: 
   id: 0
-  itemType: 1
+  itemType: 0
   equipType: 0
-  useType: 1
+  useType: 0
   itemName: New Item
   description: 
   enhancementLevel: 0
