@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
 
     private Stack<PopupUI> popupStack = new Stack<PopupUI>();
     private Dictionary<string, BaseUI> uiList = new Dictionary<string, BaseUI>();
+    private List<PopupUI> activePopups = new List<PopupUI>(); // 활성화된 모든 팝업 추적
 
     private void Awake()
     {
@@ -57,10 +58,15 @@ public class UIManager : MonoBehaviour
         if (popup != null)
         {
             popupStack.Push(popup);
+            if (!activePopups.Contains(popup))
+            {
+                activePopups.Add(popup);
+            }
         }
         return popup;
     }
 
+    // 스택 구조로 가장 최근 팝업 닫기 (ESC 키 등에 사용)
     public void ClosePopupUI()
     {
         if (popupStack.Count == 0)
@@ -68,12 +74,63 @@ public class UIManager : MonoBehaviour
 
         PopupUI popup = popupStack.Pop();
         popup.Close();
+        activePopups.Remove(popup);
+    }
+
+    // 특정 팝업을 직접 지정해서 닫기 (버튼 클릭 등에 사용)
+    public void ClosePopupUI(PopupUI popup)
+    {
+        if (popup == null)
+            return;
+
+        // 스택에서도 제거 (복제본 생성 후 해당 팝업만 제외하고 다시 스택에 넣기)
+        Stack<PopupUI> tempStack = new Stack<PopupUI>();
+        while (popupStack.Count > 0)
+        {
+            PopupUI p = popupStack.Pop();
+            if (p != popup)
+            {
+                tempStack.Push(p);
+            }
+        }
+        
+        // 다시 원래 스택으로 복원
+        while (tempStack.Count > 0)
+        {
+            popupStack.Push(tempStack.Pop());
+        }
+        
+        // 팝업 닫기
+        popup.Close();
+        activePopups.Remove(popup);
+    }
+
+    // 특정 타입의 팝업 닫기 (타입으로 지정)
+    public void ClosePopupUI<T>() where T : PopupUI
+    {
+        string key = typeof(T).Name;
+        
+        if (uiList.TryGetValue(key, out BaseUI ui))
+        {
+            PopupUI popup = ui as PopupUI;
+            if (popup != null)
+            {
+                ClosePopupUI(popup);
+            }
+        }
     }
 
     public void CloseAllPopupUI()
     {
         while (popupStack.Count > 0)
             ClosePopupUI();
+        
+        // 만약을 위해 activePopups도 처리
+        foreach (var popup in activePopups.ToArray())
+        {
+            popup.Close();
+        }
+        activePopups.Clear();
     }
 
     public void RegisterUI(BaseUI ui)
@@ -85,7 +142,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        // ESC로 팝업 닫기
+        // ESC로 팝업 닫기 (안드로이드의 경우 뒤로가기 버튼)
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ClosePopupUI();

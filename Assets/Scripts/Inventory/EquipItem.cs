@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipItem : MonoBehaviour
+public class EquipItem : PopupUI
 {
     [SerializeField] private Image itemimage;
     [SerializeField] private TextMeshProUGUI power;
@@ -22,14 +22,14 @@ public class EquipItem : MonoBehaviour
         if (item == null) return;
         
         currentItem = item;
-        gameObject.SetActive(true);
+        base.Show();
         UpdateUI();
     }
 
-    public void Hide()
+    public override void Hide()
     {
         currentItem = null;
-        gameObject.SetActive(false);
+        base.Hide();
     }
 
     private void UpdateUI()
@@ -48,5 +48,11 @@ public class EquipItem : MonoBehaviour
         Reduction.text = $"피해감소: {currentItem.GetOptionValue(ConditionType.reduction)}";
         CriticalChance.text = $"치명타확률: {currentItem.GetOptionValue(ConditionType.CriticalChance)}";
         CriticalDamage.text = $"치명타피해: {currentItem.GetOptionValue(ConditionType.CriticalDamage)}";
+    }
+
+    protected override void Clear()
+    {
+        base.Clear();
+        currentItem = null;
     }
 }

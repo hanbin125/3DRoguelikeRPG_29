@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectedItem : MonoBehaviour
+public class SelectedItem : PopupUI
 {
     [SerializeField] private Image itemimage;
     [SerializeField] private TextMeshProUGUI power;
@@ -21,14 +21,18 @@ public class SelectedItem : MonoBehaviour
     private System.Action<ItemData> onEquipCallback;
     private System.Action<ItemData> onReleaseCallback;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         btn_equip.onClick.AddListener(OnEquipButtonClicked);
         btn_Release.onClick.AddListener(OnReleaseButtonClicked);
     }
 
     public void Initialize(System.Action<ItemData> equipCallback, System.Action<ItemData> releaseCallback)
     {
+        //초기화에서 이벤트를 받아와서 연결시켜주는 것도 좋은 방식인것같다 .
+        //어차피 장착 해제에대한 로직은 여기서 안할것이기때문에 
+        // 아 그니까 이게 세부 로직도 여기서 구현을 하는게 아니라 popupinventory까지 올라서 한다? 맞지 그게 
         onEquipCallback = equipCallback;
         onReleaseCallback = releaseCallback;
     }
@@ -38,14 +42,14 @@ public class SelectedItem : MonoBehaviour
         if (item == null) return;
         
         currentItem = item;
-        gameObject.SetActive(true);
+        base.Show();
         UpdateUI();
     }
 
-    public void Hide()
+    public override void Hide()
     {
         currentItem = null;
-        gameObject.SetActive(false);
+        base.Hide();
     }
 
     private void UpdateUI()
@@ -80,5 +84,11 @@ public class SelectedItem : MonoBehaviour
         {
             onReleaseCallback?.Invoke(currentItem);
         }
+    }
+
+    protected override void Clear()
+    {
+        base.Clear();
+        currentItem = null;
     }
 }
