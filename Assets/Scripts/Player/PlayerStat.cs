@@ -20,11 +20,11 @@ public class PlayerStat : BaseStat
     [SerializeField] TextMeshProUGUI _dmgReductionText;
     [SerializeField] TextMeshProUGUI _criticalChanceText;
     [SerializeField] TextMeshProUGUI _criticalDamageText;
-    [SerializeField] GameObject _playerUI;
 
     private void Start()
     {
-        _hpText.text = _baseHP.ToString();
+        InitializeStats();
+        SetBaseHP();
     }
     private Dictionary<StatType, float> equipmentBonuses = new Dictionary<StatType, float>();
     private Dictionary<StatType, float> buffBonuses = new Dictionary<StatType, float>();
@@ -46,12 +46,18 @@ public class PlayerStat : BaseStat
     public override float GetStatValue(StatType type)
     {
         float baseValue = base.GetStatValue(type);
-        float equipBonus = equipmentBonuses.TryGetValue(type, out float equip) ? equip : 0f;
-        float buffBonus = buffBonuses.TryGetValue(type, out float buff) ? buff : 0f;
+        //float equipBonus = equipmentBonuses.TryGetValue(type, out float equip) ? equip : 0f;
+        //float buffBonus = buffBonuses.TryGetValue(type, out float buff) ? buff : 0f;
 
-        return baseValue + equipBonus + buffBonus;
+        return baseValue;
+            //+ equipBonus + buffBonus;
     }
-   
+
+    public void SetBaseHP()
+    {
+        _hpText.text = GetStatValue(StatType.HP).ToString("F0");
+    }
+
     public void AddEquipmentBonus(StatType type, float bonus)
     {
         if (!equipmentBonuses.ContainsKey(type))

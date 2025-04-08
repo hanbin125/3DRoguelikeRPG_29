@@ -5,7 +5,7 @@ using static UnityEditor.Progress;
 public interface BaseEntity
 {
     void TakeDamage(int damage);
-    void Healing(int heal);
+    void Healing(int heal); 
     float GetCurrentHP();
     bool IsDead();
 }
@@ -23,6 +23,7 @@ public class Player : MonoBehaviour, BaseEntity
     {
         float currentHP = _stats.GetStatValue(StatType.HP);
         _stats.SetStatValue(StatType.HP, currentHP - damage);
+        _stats.SetBaseHP();
     }
 
     public void Healing(int heal)

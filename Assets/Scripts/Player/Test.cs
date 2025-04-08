@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    [SerializeField] PlayerStat _playerStat;
+    [SerializeField] Player _player;
+    //private void Start()
+    //{
+    //    PlayerStat stat = _player.GetComponent<PlayerStat>();
+    //    stat.SetBaseHP(300);
+    //}
 
     public void Damage()
     {
-        _playerStat.TakeDamage(50);
+        _player.TakeDamage(50);
     }
 }
