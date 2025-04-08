@@ -8,6 +8,8 @@ public class InventoryManager : MonoBehaviour
     public List<SlotItemData> slotItemDatas;
 
     [SerializeField] private UIInventory UIinventory;
+    [SerializeField] private List<SlotItemData> TestItemData;
+
 
     private void Start()
     {
@@ -26,5 +28,27 @@ public class InventoryManager : MonoBehaviour
         }
 
         //데이터 넣어주기(저장된 데이터 읽어와서)
+        //text용 
+        AddItemList();
+    }
+
+    public void AddItemList()
+    {
+        for (int i = 0; i < TestItemData.Count; i++)
+        {
+            AddInventoryItem(TestItemData[i].item);
+        }
+    }
+
+
+    public bool AddInventoryItem(ItemData itemData)
+    {
+        var emptySlot=slotItemDatas.Find(slot => slot.IsEmpty);
+        if (emptySlot != null)
+        {
+            emptySlot.AddItem(itemData);
+            return true;
+        }
+        return false;
     }
 }
