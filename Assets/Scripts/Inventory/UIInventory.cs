@@ -48,6 +48,7 @@ public class UIInventory : MonoBehaviour
     /// <param name="slotItemData"></param>
     private void HandleItemOneClick(SlotItemData slotItemData)
     {
+        // 그 부위에 아이템이 장착 되어있나 없나 
 
     }
 }
