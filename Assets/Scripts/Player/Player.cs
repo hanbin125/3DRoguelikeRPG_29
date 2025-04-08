@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
-
 public interface BaseEntity
 {
     void TakeDamage(int damage);
@@ -10,34 +9,35 @@ public interface BaseEntity
     float GetCurrentHP();
     bool IsDead();
 }
+
 public class Player : MonoBehaviour, BaseEntity
 {
-    private PlayerStat stats;
+    private PlayerStat _stats;
 
     private void Awake()
     {
-        stats = GetComponent<PlayerStat>();
+        _stats = GetComponent<PlayerStat>();
     }
 
     public void TakeDamage(int damage)
     {
-        float currentHP = stats.GetStatValue(StatType.HP);
-        stats.SetStatValue(StatType.HP, currentHP - damage);
+        float currentHP = _stats.GetStatValue(StatType.HP);
+        _stats.SetStatValue(StatType.HP, currentHP - damage);
     }
 
     public void Healing(int heal)
     {
-        float currentHP = stats.GetStatValue(StatType.HP);
-        stats.SetStatValue(StatType.HP, currentHP + heal);
+        float currentHP = _stats.GetStatValue(StatType.HP);
+        _stats.SetStatValue(StatType.HP, currentHP + heal);
     }
     public float GetCurrentHP()
     {
-        return stats.GetStatValue(StatType.HP);
+        return _stats.GetStatValue(StatType.HP);
     }
 
     public bool IsDead()
     {
-        return stats.GetStatValue(StatType.HP) <= 0f;
+        return _stats.GetStatValue(StatType.HP) <= 0f;
     }
 
     //public void EquipItem(Item item)

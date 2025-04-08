@@ -6,26 +6,25 @@ using UnityEngine;
 
 public class PlayerStat : BaseStat
 {
-    [SerializeField] private int baseHP = 100;
-    [SerializeField] private int baseMP = 50;
-    [SerializeField] private int baseSpeed = 5;
-    [SerializeField] private int baseAttack = 10;
-    [SerializeField] private float baseDMGReduction = 0f;
-    [SerializeField] private int baseCriticalChance = 5;
-    [SerializeField] private float baseCriticalDamage = 1.25f;
-    [SerializeField] TextMeshProUGUI hpText;
-    [SerializeField] TextMeshProUGUI mpText;
-    [SerializeField] TextMeshProUGUI attackText;
-    [SerializeField] TextMeshProUGUI speedText;
-    [SerializeField] TextMeshProUGUI dmgReductionText;
-    [SerializeField] TextMeshProUGUI criticalChanceText;
-    [SerializeField] TextMeshProUGUI criticalDamageText;
-    [SerializeField] private GameObject playerUI;
+    [SerializeField] int _baseHP = 100;
+    [SerializeField] int _baseMP = 50;
+    [SerializeField] int _baseSpeed = 5;
+    [SerializeField] int _baseAttack = 10;
+    [SerializeField] float _baseDMGReduction = 0f;
+    [SerializeField] int _baseCriticalChance = 5;
+    [SerializeField] float _baseCriticalDamage = 1.25f;
+    [SerializeField] TextMeshProUGUI _hpText;
+    [SerializeField] TextMeshProUGUI _mpText;
+    [SerializeField] TextMeshProUGUI _attackText;
+    [SerializeField] TextMeshProUGUI _speedText;
+    [SerializeField] TextMeshProUGUI _dmgReductionText;
+    [SerializeField] TextMeshProUGUI _criticalChanceText;
+    [SerializeField] TextMeshProUGUI _criticalDamageText;
+    [SerializeField] GameObject _playerUI;
 
     private void Start()
     {
-        hpText.text = baseHP.ToString();
-
+        _hpText.text = _baseHP.ToString();
     }
     private Dictionary<StatType, float> equipmentBonuses = new Dictionary<StatType, float>();
     private Dictionary<StatType, float> buffBonuses = new Dictionary<StatType, float>();
@@ -35,13 +34,13 @@ public class PlayerStat : BaseStat
         base.InitializeStats();
 
         // 기본 스탯 설정
-        SetStatValue(StatType.HP, baseHP);
-        SetStatValue(StatType.MP, baseMP);
-        SetStatValue(StatType.Attack, baseAttack);
-        SetStatValue(StatType.Speed, baseSpeed);
-        SetStatValue(StatType.DMGReduction, baseDMGReduction);
-        SetStatValue(StatType.CriticalChance, baseCriticalChance);
-        SetStatValue(StatType.CriticalDamage, baseCriticalDamage);
+        SetStatValue(StatType.HP, _baseHP);
+        SetStatValue(StatType.MP, _baseMP);
+        SetStatValue(StatType.Attack, _baseAttack);
+        SetStatValue(StatType.Speed, _baseSpeed);
+        SetStatValue(StatType.DMGReduction, _baseDMGReduction);
+        SetStatValue(StatType.CriticalChance, _baseCriticalChance);
+        SetStatValue(StatType.CriticalDamage, _baseCriticalDamage);
     }
 
     public override float GetStatValue(StatType type)
@@ -52,7 +51,7 @@ public class PlayerStat : BaseStat
 
         return baseValue + equipBonus + buffBonus;
     }
-
+   
     public void AddEquipmentBonus(StatType type, float bonus)
     {
         if (!equipmentBonuses.ContainsKey(type))

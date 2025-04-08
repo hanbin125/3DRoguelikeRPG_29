@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    [SerializeField] Player player;
+    [SerializeField] PlayerStat _playerStat;
 
     public void Damage()
     {
-        player.TakeDamage(50);
+        _playerStat.TakeDamage(50);
     }
 }
