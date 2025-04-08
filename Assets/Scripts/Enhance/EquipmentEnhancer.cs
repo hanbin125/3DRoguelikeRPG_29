@@ -27,8 +27,8 @@ public class EquipmentEnhancer : MonoBehaviour
         }
 
         //현재강화비용
-        float currentCose = equipment.enhancementCost * Mathf.Pow(equipment.enhancementCostMultiplier, equipment.enhancementLevel);
-        Debug.Log($"현재 강화 비용 : {currentCose}");
+        float currentCost = equipment.enhancementCost * Mathf.Pow(equipment.enhancementCostMultiplier, equipment.enhancementLevel);
+        Debug.Log($"현재 강화 비용 : {currentCost}");
 
         if(Random.value <= successRate)
         {
