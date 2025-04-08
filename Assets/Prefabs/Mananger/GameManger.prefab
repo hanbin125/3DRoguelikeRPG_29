@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2256874547743664127}
   - component: {fileID: 8967972780472275124}
-  - component: {fileID: 3461827371588482566}
   m_Layer: 0
   m_Name: GameManger
   m_TagString: Untagged
@@ -45,18 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8826decfd2ee8b4e9a8e15ea4d655ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryManager: {fileID: 3461827371588482566}
---- !u!114 &3461827371588482566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6953731821857431527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39cfa335dc6495d4a84659636141cbed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotItemDatas: []
-  uIInventory: {fileID: 0}
+  _inventoryManager: {fileID: 0}
+  _playerManager: {fileID: 0}
+  _equipMananger: {fileID: 0}

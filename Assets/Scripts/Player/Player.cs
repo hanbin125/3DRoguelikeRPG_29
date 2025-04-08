@@ -2,42 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
-
 public interface BaseEntity
 {
-    void TakeDamage(float damage);
-    void Healing(float heal);
+    void TakeDamage(int damage);
+    void Healing(int heal);
     float GetCurrentHP();
     bool IsDead();
 }
+
 public class Player : MonoBehaviour, BaseEntity
 {
-    private PlayerStat stats;
+    private PlayerStat _stats;
 
-    private void Start()
+    private CurrencyManager currency;
+    public CurrencyManager Currency => currency;
+
+    private void Awake()
     {
-        stats = GetComponent<PlayerStat>();
+        _stats = GetComponent<PlayerStat>();
+        currency = GetComponent<CurrencyManager>();
+        // 골드 기본값 
+        currency.AddCurrency(CurrencyType.Gold, 1000);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
-        float currentHP = stats.GetStatValue(StatType.HP);
-        stats.SetStatValue(StatType.HP, currentHP - damage);
+        float currentHP = _stats.GetStatValue(StatType.HP);
+        _stats.SetStatValue(StatType.HP, currentHP - damage);
+        _stats.SetBaseHP();
     }
 
-    public void Healing(float heal)
+    public void Healing(int heal)
     {
-        float currentHP = stats.GetStatValue(StatType.HP);
-        stats.SetStatValue(StatType.HP, currentHP + heal);
+        float currentHP = _stats.GetStatValue(StatType.HP);
+        _stats.SetStatValue(StatType.HP, currentHP + heal);
     }
     public float GetCurrentHP()
     {
-        return stats.GetStatValue(StatType.HP);
+        return _stats.GetStatValue(StatType.HP);
     }
 
     public bool IsDead()
     {
-        return stats.GetStatValue(StatType.HP) <= 0f;
+        return _stats.GetStatValue(StatType.HP) <= 0f;
     }
 
     //public void EquipItem(Item item)
