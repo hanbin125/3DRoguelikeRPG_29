@@ -14,9 +14,14 @@ public class CurrencyManager : MonoBehaviour
     public Dictionary<CurrencyType, int> currencies;
     public event Action<int> OnGoldChange;
 
-    private void Start()
+    private void Awake()
     {
         init();
+    }
+
+    private void Start()
+    {
+        
     }
 
     public void init()
