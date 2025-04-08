@@ -55,7 +55,7 @@ public class PlayerStat : BaseStat
 
     public void SetBaseHP()
     {
-        _hpText.text = GetStatValue(StatType.HP).ToString("F0");
+        //_hpText.text = GetStatValue(StatType.HP).ToString("F0");
     }
 
     public void AddEquipmentBonus(StatType type, float bonus)

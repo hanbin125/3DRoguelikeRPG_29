@@ -14,4 +14,18 @@ public class UIInventoruScrean : MonoBehaviour
     [SerializeField] private Image Slot_Equip_Coat;
     [SerializeField] private Image Slot_Equip_Shoes;
     [SerializeField] private Image Slot_Equip_Glove;
+    [SerializeField] private GameObject EquipedItem;
+    [SerializeField] private GameObject SelectedItem;
+
+
+    public void EquipedItemPopup()
+    {
+        //켜져있으면 꺼주고 꺼져있으면 켜주고 ? 
+        EquipedItem.gameObject.SetActive(!EquipedItem.gameObject.activeInHierarchy);
+
+    }
+
+
+
+
 }

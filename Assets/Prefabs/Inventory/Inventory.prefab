@@ -935,6 +935,8 @@ MonoBehaviour:
   Slot_Equip_Coat: {fileID: 7383293698899118920}
   Slot_Equip_Shoes: {fileID: 2377445562848617999}
   Slot_Equip_Glove: {fileID: 512505879670943717}
+  EquipedItem: {fileID: 1012369608613349009}
+  SelectedItem: {fileID: 4833398281957916308}
 --- !u!1 &6041129727743117664
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,6 +2174,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0df054272aee9ec4997a74b434944f89, type: 3}
+--- !u!1 &4833398281957916308 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5065803228797310812, guid: 0df054272aee9ec4997a74b434944f89, type: 3}
+  m_PrefabInstance: {fileID: 387018280661428680}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5858419862736199814 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6058395655772293454, guid: 0df054272aee9ec4997a74b434944f89, type: 3}
@@ -2274,6 +2281,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd483ecd3be68934484a1dc617a3fdae, type: 3}
+--- !u!1 &1012369608613349009 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2191134763032807272, guid: bd483ecd3be68934484a1dc617a3fdae, type: 3}
+  m_PrefabInstance: {fileID: 1181299618992374265}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2040780691672832131 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 880065081415227770, guid: bd483ecd3be68934484a1dc617a3fdae, type: 3}
