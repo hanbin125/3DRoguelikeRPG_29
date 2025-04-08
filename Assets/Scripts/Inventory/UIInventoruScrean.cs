@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIInventoruScrean : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private TextMeshProUGUI inventoryVlume;
+    [SerializeField] private TextMeshProUGUI Name;
+    [SerializeField] private TextMeshProUGUI Gold;
+    [SerializeField] private Image Posion_UI;
+    [SerializeField] private Image Slot_Equip_Weapon;
+    [SerializeField] private Image Slot_Equip_Coat;
+    [SerializeField] private Image Slot_Equip_Shoes;
+    [SerializeField] private Image Slot_Equip_Glove;
 }

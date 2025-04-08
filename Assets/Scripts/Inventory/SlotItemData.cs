@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlotItemData : MonoBehaviour
+[CreateAssetMenu(fileName = "Item", menuName = "New SlotItemData")]
+public class SlotItemData : ScriptableObject
 {
+    [Header("아이템")]
     public ItemData item;
+    [Header("수량")]
     public int amount;
 
     public bool IsEmpty => item == null;

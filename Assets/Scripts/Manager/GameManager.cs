@@ -28,11 +28,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private InventoryManager _inventoryManager;
     //getset을 사용못하니까 접근용 만들기 
-    public InventoryManager InventoryManager => inventoryManager;
+    public InventoryManager InventoryManager => _inventoryManager;
 
+    [SerializeField] private PlayerManager _playerManager;
+    public PlayerManager PlayerManager => _playerManager;
 
+    [SerializeField] private EquipMananger _equipMananger;
+    public EquipMananger EquipMananger => _equipMananger;
     private void Awake()
     {
         //인스턴스가 존재하는지 확인 + 인스턴스가 다른지 확인 

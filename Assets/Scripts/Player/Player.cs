@@ -5,7 +5,7 @@ using static UnityEditor.Progress;
 public interface BaseEntity
 {
     void TakeDamage(int damage);
-    void Healing(int heal); 
+    void Healing(int heal);
     float GetCurrentHP();
     bool IsDead();
 }
@@ -13,17 +13,23 @@ public interface BaseEntity
 public class Player : MonoBehaviour, BaseEntity
 {
     private PlayerStat _stats;
-    TestPlayerUI testPlayerUI;
-    private void Start()
+
+    private CurrencyManager currency;
+    public CurrencyManager Currency => currency;
+
+    private void Awake()
     {
         _stats = GetComponent<PlayerStat>();
+        currency = GetComponent<CurrencyManager>();
+        // 골드 기본값 
+        currency.AddCurrency(CurrencyType.Gold, 1000);
     }
 
     public void TakeDamage(int damage)
     {
         float currentHP = _stats.GetStatValue(StatType.HP);
         _stats.SetStatValue(StatType.HP, currentHP - damage);
-        testPlayerUI.SetBaseHP();
+        _stats.SetBaseHP();
     }
 
     public void Healing(int heal)
