@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    private Player _player;
+    [SerializeField]private Player _player;
     public Player Player => _player;
 
     private void Start()
@@ -14,7 +14,8 @@ public class PlayerManager : MonoBehaviour
 
     public void init()
     {
-        _player = FindObjectOfType<Player>();
+        //직접 넣어주자
+        //_player = FindObjectOfType<Player>();
     }
 
 }

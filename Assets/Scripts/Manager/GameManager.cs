@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerManager playerManager;
     public PlayerManager PlayerManager => playerManager;
 
-
+    
     private void Awake()
     {
         //인스턴스가 존재하는지 확인 + 인스턴스가 다른지 확인 
