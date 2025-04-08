@@ -13,8 +13,8 @@ public interface BaseEntity
 public class Player : MonoBehaviour, BaseEntity
 {
     private PlayerStat _stats;
-
-    private void Awake()
+    TestPlayerUI testPlayerUI;
+    private void Start()
     {
         _stats = GetComponent<PlayerStat>();
     }
@@ -23,7 +23,7 @@ public class Player : MonoBehaviour, BaseEntity
     {
         float currentHP = _stats.GetStatValue(StatType.HP);
         _stats.SetStatValue(StatType.HP, currentHP - damage);
-        _stats.SetBaseHP();
+        testPlayerUI.SetBaseHP();
     }
 
     public void Healing(int heal)

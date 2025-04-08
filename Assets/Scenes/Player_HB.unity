@@ -344,7 +344,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6953731821857431527, guid: 280220dd00033fa43be12f8fd9fa3d45, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1772333021}
   m_SourcePrefab: {fileID: 100100000, guid: 280220dd00033fa43be12f8fd9fa3d45, type: 3}
 --- !u!1 &476535463
 GameObject:
@@ -474,6 +477,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 190c087fba99db54aa7730d4017b508c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1772333017 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6953731821857431527, guid: 280220dd00033fa43be12f8fd9fa3d45, type: 3}
+  m_PrefabInstance: {fileID: 401795653}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1772333021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772333017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3242ca0dcd6cfae41a0c2f2710f2e949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hpText: {fileID: 530082692}
+  _mpText: {fileID: 0}
+  _attackText: {fileID: 0}
+  _speedText: {fileID: 0}
+  _dmgReductionText: {fileID: 0}
+  _criticalChanceText: {fileID: 0}
+  _criticalDamageText: {fileID: 0}
 --- !u!1 &2021703927
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,6 +662,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 560883337836766811, guid: ae11f071cbbfebf499a19f08f915fe88, type: 3}
+      propertyPath: m_Name
+      value: DamageBtn
+      objectReference: {fileID: 0}
     - target: {fileID: 3565488991337225270, guid: ae11f071cbbfebf499a19f08f915fe88, type: 3}
       propertyPath: m_Pivot.x
       value: 0
