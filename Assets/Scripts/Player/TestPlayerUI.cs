@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class TestPlayerUI : MonoBehaviour
 {
-    PlayerStat playerStat;
+    [SerializeField] Player _player;
+    [SerializeField] PlayerStat _playerStat;
 
     [SerializeField] TextMeshProUGUI _hpText;
     [SerializeField] TextMeshProUGUI _mpText;
@@ -17,10 +18,11 @@ public class TestPlayerUI : MonoBehaviour
 
     private void Start()
     {
-        SetBaseHP();
+        _playerStat.OnHPChanged += UpdateHP;
+        UpdateHP(_playerStat.GetStatValue(StatType.HP));
     }
-    public void SetBaseHP()
+    public void UpdateHP(float newHP)
     {
-        _hpText.text = playerStat.GetStatValue(StatType.HP).ToString("F0");
+        _hpText.text = newHP.ToString("F0");
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2256874547743664127}
   - component: {fileID: 8967972780472275124}
+  - component: {fileID: 6553645299220464278}
   m_Layer: 0
   m_Name: GameManger
   m_TagString: Untagged
@@ -47,3 +48,24 @@ MonoBehaviour:
   _inventoryManager: {fileID: 0}
   _playerManager: {fileID: 0}
   _equipMananger: {fileID: 0}
+--- !u!114 &6553645299220464278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6953731821857431527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3242ca0dcd6cfae41a0c2f2710f2e949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 0}
+  _playerStat: {fileID: 0}
+  _hpText: {fileID: 0}
+  _mpText: {fileID: 0}
+  _attackText: {fileID: 0}
+  _speedText: {fileID: 0}
+  _dmgReductionText: {fileID: 0}
+  _criticalChanceText: {fileID: 0}
+  _criticalDamageText: {fileID: 0}

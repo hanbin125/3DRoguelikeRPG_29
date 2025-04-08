@@ -8,11 +8,15 @@ public interface BaseEntity
     void Healing(int heal);
     float GetCurrentHP();
     bool IsDead();
+    void SpeedUp(float speed);
 }
 
 public class Player : MonoBehaviour, BaseEntity
 {
     private PlayerStat _stats;
+
+    [SerializeField] VariableJoystick _variableJoystick;
+    [SerializeField] Rigidbody _rb;
 
     private CurrencyManager currency;
     public CurrencyManager Currency => currency;
@@ -24,12 +28,15 @@ public class Player : MonoBehaviour, BaseEntity
         // 골드 기본값 
         currency.AddCurrency(CurrencyType.Gold, 1000);
     }
-
+    public void FixedUpdate()
+    {
+        Vector3 direction = Vector3.forward * _variableJoystick.Vertical + Vector3.right * _variableJoystick.Horizontal;
+        _rb.AddForce(direction * _stats.GetStatValue(StatType.Speed) * Time.fixedDeltaTime, ForceMode.VelocityChange);
+    }
     public void TakeDamage(int damage)
     {
         float currentHP = _stats.GetStatValue(StatType.HP);
         _stats.SetStatValue(StatType.HP, currentHP - damage);
-        _stats.SetBaseHP();
     }
 
     public void Healing(int heal)
@@ -45,6 +52,12 @@ public class Player : MonoBehaviour, BaseEntity
     public bool IsDead()
     {
         return _stats.GetStatValue(StatType.HP) <= 0f;
+    }
+
+    public void SpeedUp(float speed)
+    {
+        float currentSpeed = _stats.GetStatValue(StatType.Speed);
+        _stats.SetStatValue(StatType.Speed, currentSpeed + speed);
     }
 
     //public void EquipItem(Item item)

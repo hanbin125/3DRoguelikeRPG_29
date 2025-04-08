@@ -14,6 +14,7 @@ public class PlayerStat : BaseStat
     [SerializeField] int _baseCriticalChance = 5;
     [SerializeField] float _baseCriticalDamage = 1.25f;
 
+    public event Action<float> OnHPChanged;
     private void Awake()
     {
         InitializeStats();
@@ -68,6 +69,10 @@ public class PlayerStat : BaseStat
     protected override void OnStatChanged(StatType type)
     {
         base.OnStatChanged(type);
-        // UI 업데이트 등 추가 작업
-    }
+        if (type == StatType.HP)
+        {
+            float currentHP = GetStatValue(StatType.HP);
+            OnHPChanged?.Invoke(currentHP);
+        }
+    }
 }

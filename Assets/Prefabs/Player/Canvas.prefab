@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7691465984204733233}
   - component: {fileID: 7100465113803855219}
   m_Layer: 5
-  m_Name: DamageTest
+  m_Name: DamageBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
