@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     //getset을 사용못하니까 접근용 만들기 
     public InventoryManager InventoryManager => inventoryManager;
 
+    [SerializeField] private PlayerManager playerManager;
+    public PlayerManager PlayerManager => playerManager;
+
 
     private void Awake()
     {
