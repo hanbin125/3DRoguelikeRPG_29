@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerStat : BaseStat
@@ -12,7 +13,20 @@ public class PlayerStat : BaseStat
     [SerializeField] private float baseDMGReduction = 0f;
     [SerializeField] private int baseCriticalChance = 5;
     [SerializeField] private float baseCriticalDamage = 1.25f;
+    [SerializeField] TextMeshProUGUI hpText;
+    [SerializeField] TextMeshProUGUI mpText;
+    [SerializeField] TextMeshProUGUI attackText;
+    [SerializeField] TextMeshProUGUI speedText;
+    [SerializeField] TextMeshProUGUI dmgReductionText;
+    [SerializeField] TextMeshProUGUI criticalChanceText;
+    [SerializeField] TextMeshProUGUI criticalDamageText;
+    [SerializeField] private GameObject playerUI;
 
+    private void Start()
+    {
+        hpText.text = baseHP.ToString();
+
+    }
     private Dictionary<StatType, float> equipmentBonuses = new Dictionary<StatType, float>();
     private Dictionary<StatType, float> buffBonuses = new Dictionary<StatType, float>();
 
@@ -24,6 +38,10 @@ public class PlayerStat : BaseStat
         SetStatValue(StatType.HP, baseHP);
         SetStatValue(StatType.MP, baseMP);
         SetStatValue(StatType.Attack, baseAttack);
+        SetStatValue(StatType.Speed, baseSpeed);
+        SetStatValue(StatType.DMGReduction, baseDMGReduction);
+        SetStatValue(StatType.CriticalChance, baseCriticalChance);
+        SetStatValue(StatType.CriticalDamage, baseCriticalDamage);
     }
 
     public override float GetStatValue(StatType type)
