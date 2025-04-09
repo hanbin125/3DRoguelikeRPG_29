@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectedItem : PopupUI
+public class UISelectedItem : PopupUI
 {
     [SerializeField] private Image itemimage;
     [SerializeField] private TextMeshProUGUI power;
@@ -24,6 +24,7 @@ public class SelectedItem : PopupUI
     protected override void Awake()
     {
         base.Awake();
+        UIManager.Instance.RegisterUI(this);
         btn_equip.onClick.AddListener(OnEquipButtonClicked);
         btn_Release.onClick.AddListener(OnReleaseButtonClicked);
     }
