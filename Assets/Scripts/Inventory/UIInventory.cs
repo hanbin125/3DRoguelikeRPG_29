@@ -9,35 +9,40 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private UISlot uiSlotPrefab;
     [SerializeField] private Transform SlotParent;
 
+    private InventoryManager inventoryManager;
 
-    public void Init()
+
+    public void Init(InventoryManager manager)
     {
-        //슬롯 데이터 
+        inventoryManager = manager;
+        
+        // 슬롯 생성
         slots = new List<UISlot>();
-        //슬롯 생성 
         for (int i = 0; i < MaxSlots; i++)
         {
             UISlot slotobj = Instantiate(uiSlotPrefab, SlotParent);
             slots.Add(slotobj);
         }
 
-        //데이터 넣어주기 
-        UpdateUI();
-
-        //아이템 클릭이벤트를 여기서 관리하기 위해서 이벤트를 연결 
+        // 이벤트 연결
         foreach (var slot in slots)
         {
             slot.OnItemClicked += HandleItemOneClick;
         }
+
+        // UI 업데이트
+        UpdateUI();
     }
 
     private void UpdateUI()
     {
+        if (inventoryManager == null) return;
+
         for (int i = 0; i < slots.Count; i++)
         {
-            if (i < GameManager.Instance.InventoryManager.slotItemDatas.Count)
+            if (i < inventoryManager.slotItemDatas.Count)
             {
-                slots[i].SetSlotData(GameManager.Instance.InventoryManager.slotItemDatas[i]);
+                slots[i].SetSlotData(inventoryManager.slotItemDatas[i]);
             }
         }
     }

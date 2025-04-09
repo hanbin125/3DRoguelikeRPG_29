@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PopupInventory : PopupUI
+public class UIPopupInventory : PopupUI
 {
     [SerializeField] private TextMeshProUGUI inventoryVolume;
     [SerializeField] private TextMeshProUGUI playerName;
@@ -12,18 +12,23 @@ public class PopupInventory : PopupUI
     [SerializeField] private Image slotEquipCoat;
     [SerializeField] private Image slotEquipShoes;
     [SerializeField] private Image slotEquipGlove;
-    [SerializeField] private EquipItem equipedItem;
-    [SerializeField] private SelectedItem selectedItem;
+    [SerializeField] private UIEquipedItem equipedItem;
+    [SerializeField] private UISelectedItem selectedItem;
     
     // 탭 버튼들
     [SerializeField] private Button equipmentTabButton;
     [SerializeField] private Button consumableTabButton;
     [SerializeField] private Button materialTabButton;
 
-    protected override void Awake()
+    //각 class 요소들 
+    private UIInventory uIInventory;
+
+    protected virtual void Awake()
     {
-        base.Awake();
+        // UI 매니저에 등록
+        UIManager.Instance.RegisterUI(this);
         
+        uIInventory =GetComponentInChildren<UIInventory>();
         // 탭 버튼 이벤트 등록
         if (equipmentTabButton != null)
             equipmentTabButton.onClick.AddListener(() => OnTabChanged(ItemType.Equipment));
@@ -39,7 +44,10 @@ public class PopupInventory : PopupUI
     {
         //초기화 작업
         base.OnEnable();
-        
+
+        //InventoryManager 와 UIInventory 연결 
+        GameManager.Instance.InventoryManager.LinkUI(uIInventory);
+
         // 인벤토리가 활성화될 때마다 최신 정보로 업데이트
         RefreshInventory();
         

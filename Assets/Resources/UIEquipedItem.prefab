@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 6002810327376859055}
   - component: {fileID: 2895649554982752122}
   m_Layer: 0
-  m_Name: EquipedItem
+  m_Name: UIEquipedItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

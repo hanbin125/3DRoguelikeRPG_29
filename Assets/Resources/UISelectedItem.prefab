@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 822861819569840027}
   - component: {fileID: 7774922947308405239}
   m_Layer: 0
-  m_Name: SelectedItem
+  m_Name: UISelectedItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
