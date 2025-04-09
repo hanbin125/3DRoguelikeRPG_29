@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 public interface BaseEntity
 {
-    void TakeDamage(int damage);
+    void MaxHPUp(float maxHP);
     void Healing(int heal);
-    float GetCurrentHP();
-    bool IsDead();
+    void MaxMPUp(float maxMP);
+    void BaseMPUp(float currentMP);
     void SpeedUp(float speed);
+    void TakeDamage(int damage);
+    void AttackUp(float attack);
+    void DMGReductionUp(float damageReduction);
+    void CriticalChanceUp(float criticalChance);
+    void CriticalDamageUp(float criticalDamage);
+    bool IsDead();
+
+    //float GetCurrentHP();
+
 }
 
 public class Player : MonoBehaviour, BaseEntity
@@ -30,7 +39,45 @@ public class Player : MonoBehaviour, BaseEntity
     public void FixedUpdate()
     {
         Vector3 direction = Vector3.forward * _floatingJoystick.Vertical + Vector3.right * _floatingJoystick.Horizontal;
-        _rb.AddForce(direction * _stats.GetStatValue(PlayerStatType.Speed) * Time.fixedDeltaTime, ForceMode.VelocityChange);
+
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            direction = direction.normalized;
+            _rb.velocity = direction * _stats.GetStatValue(PlayerStatType.Speed);
+        }
+        else
+        {
+            _rb.velocity = Vector3.zero;
+        }
+    }
+
+    public void MaxHPUp(float value)
+    {
+        _stats.ModifyStat(PlayerStatType.MaxHP, value);
+        _stats.ModifyStat(PlayerStatType.HP, value);
+    }
+    public void Healing(int value)
+    {
+        float maxHP = _stats.GetStatValue(PlayerStatType.MaxHP);
+        float currentHP = _stats.GetStatValue(PlayerStatType.HP);
+        _stats.SetStatValue(PlayerStatType.HP, Mathf.Min(currentHP + value, maxHP));
+    }
+    public void MaxMPUp(float value)
+    {
+        _stats.ModifyStat(PlayerStatType.MaxMP, value);
+        _stats.ModifyStat(PlayerStatType.MP, value);
+    }
+    public void BaseMPUp(float value)
+    {
+        float maxMP = _stats.GetStatValue(PlayerStatType.MaxMP);
+        float currentMP = _stats.GetStatValue(PlayerStatType.MP);
+        _stats.SetStatValue(PlayerStatType.MP, Mathf.Min(currentMP + value, maxMP));
+    }
+    public void SpeedUp(float speed)
+    {
+        //float currentSpeed = _stats.GetStatValue(PlayerStatType.Speed);
+        //_stats.SetStatValue(PlayerStatType.Speed, currentSpeed + speed);
+        _stats.ModifyStat(PlayerStatType.Speed, speed);
     }
     public void TakeDamage(int damage)
     {
@@ -38,16 +85,25 @@ public class Player : MonoBehaviour, BaseEntity
         _stats.SetStatValue(PlayerStatType.HP, Mathf.Max(currentHP - damage, 0));
     }
 
-    public void Healing(int heal)
+    public void AttackUp(float attack)
     {
-        float currentHP = _stats.GetStatValue(PlayerStatType.HP);
-        float maxHP = _stats.GetStatValue(PlayerStatType.MaxHP);
-        _stats.SetStatValue(PlayerStatType.HP, Mathf.Min(currentHP + heal, maxHP));
-        _stats.ModifyStat(PlayerStatType.HP, heal);
+        _stats.ModifyStat(PlayerStatType.Attack, attack);
     }
-    public float GetCurrentHP()
+
+    public void DMGReductionUp(float damageReduction)
     {
-        return _stats.GetStatValue(PlayerStatType.HP);
+        float currentDMGReduction = _stats.GetStatValue(PlayerStatType.DMGReduction);
+        _stats.SetStatValue(PlayerStatType.DMGReduction, currentDMGReduction + damageReduction);
+    }
+    public void CriticalChanceUp(float criticalChance)
+    {
+        float currentCriticalChance = _stats.GetStatValue(PlayerStatType.CriticalChance);
+        _stats.SetStatValue(PlayerStatType.CriticalChance, currentCriticalChance + criticalChance);
+    }
+    public void CriticalDamageUp(float criticalDamage)
+    {
+        float currentCriticalDamage = _stats.GetStatValue(PlayerStatType.CriticalDamage);
+        _stats.SetStatValue(PlayerStatType.CriticalDamage, currentCriticalDamage + criticalDamage);
     }
 
     public bool IsDead()
@@ -55,12 +111,10 @@ public class Player : MonoBehaviour, BaseEntity
         return _stats.GetStatValue(PlayerStatType.HP) <= 0f;
     }
 
-    public void SpeedUp(float speed)
-    {
-        //float currentSpeed = _stats.GetStatValue(StatType.Speed);
-        //_stats.SetStatValue(StatType.Speed, currentSpeed + speed);
-        _stats.ModifyStat(PlayerStatType.Speed, speed);
-    }
+    //public float GetCurrentHP()
+    //{
+    //    return _stats.GetStatValue(PlayerStatType.HP);
+    //}
 
     //public void EquipItem(Item item)
     //{
