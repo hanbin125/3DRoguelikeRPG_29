@@ -10,30 +10,41 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private Transform SlotParent;
 
     private InventoryManager inventoryManager;
+    private bool isInitialized = false;
 
+    // 초기화 (한 번만 실행)
+    public void InitSlots()
+    {
+        if (!isInitialized)
+        {
+            slots = new List<UISlot>();
+            for (int i = 0; i < MaxSlots; i++)
+            {
+                UISlot slotobj = Instantiate(uiSlotPrefab, SlotParent);
+                slots.Add(slotobj);
+                slotobj.OnItemClicked += HandleItemOneClick;
+            }
+            isInitialized = true;
+        }
+    }
 
-    public void Init(InventoryManager manager)
+    // 데이터 업데이트 (필요할 때마다 실행)
+    public void UpdateInventory(InventoryManager manager)
     {
         inventoryManager = manager;
         
-        // 슬롯 생성
-        slots = new List<UISlot>();
-        for (int i = 0; i < MaxSlots; i++)
+        // UI가 초기화되지 않았다면 초기화
+        if (!isInitialized)
         {
-            UISlot slotobj = Instantiate(uiSlotPrefab, SlotParent);
-            slots.Add(slotobj);
+            InitSlots();
         }
-
-        // 이벤트 연결
-        foreach (var slot in slots)
-        {
-            slot.OnItemClicked += HandleItemOneClick;
-        }
-
-        // UI 업데이트
+        
+        // 데이터 업데이트
         UpdateUI();
     }
-
+    /// <summary>
+    /// 여기서는 데이터를 가지고 show 보여주기만 하는 곳 >> 데이터를 관리 >inventoryManager
+    /// </summary>
     private void UpdateUI()
     {
         if (inventoryManager == null) return;
