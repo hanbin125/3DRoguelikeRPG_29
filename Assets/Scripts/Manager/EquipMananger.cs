@@ -21,7 +21,7 @@ public class EquipMananger : MonoBehaviour
     {
 
     }
-    public void unEquipitem(ItemData itemData)
+    public void UnEquipitem(ItemData itemData)
     {
 
     }

@@ -18,8 +18,6 @@ public class UISelectedItem : PopupUI
     [SerializeField] private Button btn_Release;
 
     private ItemData currentItem;
-    private System.Action<ItemData> onEquipCallback;
-    private System.Action<ItemData> onReleaseCallback;
 
     protected override void Awake()
     {
@@ -29,13 +27,9 @@ public class UISelectedItem : PopupUI
         btn_Release.onClick.AddListener(OnReleaseButtonClicked);
     }
 
-    public void Initialize(System.Action<ItemData> equipCallback, System.Action<ItemData> releaseCallback)
+    public void Initialize()
     {
-        //초기화에서 이벤트를 받아와서 연결시켜주는 것도 좋은 방식인것같다 .
-        //어차피 장착 해제에대한 로직은 여기서 안할것이기때문에 
-        // 아 그니까 이게 세부 로직도 여기서 구현을 하는게 아니라 popupinventory까지 올라서 한다? 맞지 그게 
-        onEquipCallback = equipCallback;
-        onReleaseCallback = releaseCallback;
+        // 초기화 로직
     }
 
     public void Show(ItemData item)
@@ -75,7 +69,11 @@ public class UISelectedItem : PopupUI
     {
         if (currentItem != null)
         {
-            onEquipCallback?.Invoke(currentItem);
+            // 직접 장착 로직 구현
+            GameManager.Instance.EquipMananger.Eqipitem(currentItem);
+            Debug.Log($"{currentItem.itemName} 장착");
+            // 팝업 닫기
+            UIManager.Instance.ClosePopupUI(this);
         }
     }
 
@@ -83,7 +81,11 @@ public class UISelectedItem : PopupUI
     {
         if (currentItem != null)
         {
-            onReleaseCallback?.Invoke(currentItem);
+            // 직접 해제 로직 구현
+            GameManager.Instance.EquipMananger.UnEquipitem(currentItem);
+            Debug.Log($"{currentItem.itemName} 해제");
+            // 팝업 닫기
+            UIManager.Instance.ClosePopupUI(this);
         }
     }
 
