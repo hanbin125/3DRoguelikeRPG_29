@@ -16,8 +16,17 @@ public class PlayerStat : BaseStat
     [SerializeField] int _baseCriticalChance = 5;
     [SerializeField] float _baseCriticalDamage = 1.25f;
 
+    public event Action<float> OnMaxHPChanged;
     public event Action<float> OnHPChanged;
+    public event Action<float> OnMaxMPChanged;
+    public event Action<float> OnMPChanged;
     public event Action<float> OnSpeedChanged;
+    public event Action<float> OnAttackChanged;
+    public event Action<float> OnDMGReductionChanged;
+    public event Action<float> OnCriticalChanceChanged;
+    public event Action<float> OnCriticalDamageChanged;
+
+
     private void Awake()
     {
         InitializeStats();
@@ -82,5 +91,10 @@ public class PlayerStat : BaseStat
             float currentSpeed = GetStatValue(StatType.Speed);
             OnSpeedChanged?.Invoke(currentSpeed);
         }
+        else if(type == StatType.MP)
+        {
+
+        }
+
     }
 }
