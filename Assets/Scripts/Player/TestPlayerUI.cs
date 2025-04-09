@@ -19,10 +19,16 @@ public class TestPlayerUI : MonoBehaviour
     private void Start()
     {
         _playerStat.OnHPChanged += UpdateHP;
+        _playerStat.OnSpeedChanged += UpdateSpeed;
         UpdateHP(_playerStat.GetStatValue(StatType.HP));
+        UpdateSpeed(_playerStat.GetStatValue(StatType.Speed));
     }
     public void UpdateHP(float newHP)
     {
         _hpText.text = newHP.ToString("F0");
+    }
+    public void UpdateSpeed(float newSpeed)
+    {
+        _speedText.text = newSpeed.ToString("F0");
     }
 }
