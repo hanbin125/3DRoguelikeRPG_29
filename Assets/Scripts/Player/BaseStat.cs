@@ -13,7 +13,8 @@ public enum PlayerStatType
     Attack,
     DMGReduction,
     CriticalChance,
-    CriticalDamage
+    CriticalDamage,
+    Cooltime
 }
 
 public interface IBaseStat<T>

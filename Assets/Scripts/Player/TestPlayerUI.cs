@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TestPlayerUI : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class TestPlayerUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI _dmgReductionText;
     [SerializeField] TextMeshProUGUI _criticalChanceText;
     [SerializeField] TextMeshProUGUI _criticalDamageText;
+    [SerializeField] Image _uiBar;
 
     private void Start()
     {
@@ -76,5 +78,5 @@ public class TestPlayerUI : MonoBehaviour
     {
         //_criticalDamageText.text = newCriticalDamage.ToString("F0");
     }
-
 }
+

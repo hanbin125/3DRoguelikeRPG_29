@@ -20,4 +20,3 @@ public class PlayerCamera : MonoBehaviour
         //transform.LookAt(_player);
     }
 }
-
