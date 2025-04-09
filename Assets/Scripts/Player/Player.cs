@@ -30,34 +30,36 @@ public class Player : MonoBehaviour, BaseEntity
     public void FixedUpdate()
     {
         Vector3 direction = Vector3.forward * _floatingJoystick.Vertical + Vector3.right * _floatingJoystick.Horizontal;
-        _rb.AddForce(direction * _stats.GetStatValue(StatType.Speed) * Time.fixedDeltaTime, ForceMode.VelocityChange);
+        _rb.AddForce(direction * _stats.GetStatValue(PlayerStatType.Speed) * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
     public void TakeDamage(int damage)
     {
-        float currentHP = _stats.GetStatValue(StatType.HP);
-        _stats.SetStatValue(StatType.HP, Mathf.Max(currentHP - damage, 0));
+        float currentHP = _stats.GetStatValue(PlayerStatType.HP);
+        _stats.SetStatValue(PlayerStatType.HP, Mathf.Max(currentHP - damage, 0));
     }
 
     public void Healing(int heal)
     {
-        float currentHP = _stats.GetStatValue(StatType.HP);
-        float maxHP = _stats.GetStatValue(StatType.MaxHP);
-        _stats.SetStatValue(StatType.HP, Mathf.Min(currentHP + heal, maxHP));
+        float currentHP = _stats.GetStatValue(PlayerStatType.HP);
+        float maxHP = _stats.GetStatValue(PlayerStatType.MaxHP);
+        _stats.SetStatValue(PlayerStatType.HP, Mathf.Min(currentHP + heal, maxHP));
+        _stats.ModifyStat(PlayerStatType.HP, heal);
     }
     public float GetCurrentHP()
     {
-        return _stats.GetStatValue(StatType.HP);
+        return _stats.GetStatValue(PlayerStatType.HP);
     }
 
     public bool IsDead()
     {
-        return _stats.GetStatValue(StatType.HP) <= 0f;
+        return _stats.GetStatValue(PlayerStatType.HP) <= 0f;
     }
 
     public void SpeedUp(float speed)
     {
-        float currentSpeed = _stats.GetStatValue(StatType.Speed);
-        _stats.SetStatValue(StatType.Speed, currentSpeed + speed);
+        //float currentSpeed = _stats.GetStatValue(StatType.Speed);
+        //_stats.SetStatValue(StatType.Speed, currentSpeed + speed);
+        _stats.ModifyStat(PlayerStatType.Speed, speed);
     }
 
     //public void EquipItem(Item item)

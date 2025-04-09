@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PlayerStat : BaseStat
+public class PlayerStat : BaseStat<PlayerStatType>
 {
     [SerializeField] int _maxHP = 100;
     [SerializeField] int _baseHP = 100;
@@ -31,26 +31,26 @@ public class PlayerStat : BaseStat
     {
         InitializeStats();
     }
-    private Dictionary<StatType, float> equipmentBonuses = new Dictionary<StatType, float>();
-    private Dictionary<StatType, float> buffBonuses = new Dictionary<StatType, float>();
+    private Dictionary<PlayerStatType, float> equipmentBonuses = new Dictionary<PlayerStatType, float>();
+    private Dictionary<PlayerStatType, float> buffBonuses = new Dictionary<PlayerStatType, float>();
 
     protected override void InitializeStats()
     {
         base.InitializeStats();
 
         // 기본 스탯 설정
-        SetStatValue(StatType.HP, _baseHP);
-        SetStatValue(StatType.MaxHP, _maxHP);
-        SetStatValue(StatType.MP, _baseMP);
-        SetStatValue(StatType.MaxMP, _maxMP);
-        SetStatValue(StatType.Attack, _baseAttack);
-        SetStatValue(StatType.Speed, _baseSpeed);
-        SetStatValue(StatType.DMGReduction, _baseDMGReduction);
-        SetStatValue(StatType.CriticalChance, _baseCriticalChance);
-        SetStatValue(StatType.CriticalDamage, _baseCriticalDamage);
+        SetStatValue(PlayerStatType.HP, _baseHP);
+        SetStatValue(PlayerStatType.MaxHP, _maxHP);
+        SetStatValue(PlayerStatType.MP, _baseMP);
+        SetStatValue(PlayerStatType.MaxMP, _maxMP);
+        SetStatValue(PlayerStatType.Attack, _baseAttack);
+        SetStatValue(PlayerStatType.Speed, _baseSpeed);
+        SetStatValue(PlayerStatType.DMGReduction, _baseDMGReduction);
+        SetStatValue(PlayerStatType.CriticalChance, _baseCriticalChance);
+        SetStatValue(PlayerStatType.CriticalDamage, _baseCriticalDamage);
     }
 
-    public override float GetStatValue(StatType type)
+    public override float GetStatValue(PlayerStatType type)
     {
         float baseValue = base.GetStatValue(type);
         //float equipBonus = equipmentBonuses.TryGetValue(type, out float equip) ? equip : 0f;
@@ -60,7 +60,7 @@ public class PlayerStat : BaseStat
         //+ equipBonus + buffBonus;
     }
 
-    public void AddEquipmentBonus(StatType type, float bonus)
+    public void AddEquipmentBonus(PlayerStatType type, float bonus)
     {
         if (!equipmentBonuses.ContainsKey(type))
             equipmentBonuses[type] = 0f;
@@ -69,7 +69,7 @@ public class PlayerStat : BaseStat
         OnStatChanged(type);
     }
 
-    public void AddBuff(StatType type, float bonus)
+    public void AddBuff(PlayerStatType type, float bonus)
     {
         if (!buffBonuses.ContainsKey(type))
             buffBonuses[type] = 0f;
@@ -78,23 +78,50 @@ public class PlayerStat : BaseStat
         OnStatChanged(type);
     }
 
-    protected override void OnStatChanged(StatType type)
+    protected override void OnStatChanged(PlayerStatType type)
     {
         base.OnStatChanged(type);
-        if (type == StatType.HP)
-        {
-            float currentHP = GetStatValue(StatType.HP);
-            OnHPChanged?.Invoke(currentHP);
-        }
-        else if (type == StatType.Speed)
-        {
-            float currentSpeed = GetStatValue(StatType.Speed);
-            OnSpeedChanged?.Invoke(currentSpeed);
-        }
-        else if(type == StatType.MP)
-        {
 
+        switch (type)
+        {
+            case PlayerStatType.MaxHP:
+                float maxHP = GetStatValue(PlayerStatType.MaxHP);
+                OnMaxHPChanged?.Invoke(maxHP);
+                break;
+            case PlayerStatType.HP:
+                float currentHP = GetStatValue(PlayerStatType.HP);
+                OnHPChanged?.Invoke(currentHP);
+                break;
+            case PlayerStatType.MaxMP:
+                float maxMP = GetStatValue(PlayerStatType.MaxMP);
+                OnMaxMPChanged?.Invoke(maxMP);
+                break;
+            case PlayerStatType.MP:
+                float currentMP = GetStatValue(PlayerStatType.MP);
+                OnMPChanged?.Invoke(currentMP);
+                break;
+            case PlayerStatType.Speed:
+                float currentSpeed = GetStatValue(PlayerStatType.Speed);
+                OnSpeedChanged?.Invoke(currentSpeed);
+                break;
+            case PlayerStatType.Attack:
+                float currentAttack = GetStatValue(PlayerStatType.Attack);
+                OnAttackChanged?.Invoke(currentAttack);
+                break;
+            case PlayerStatType.DMGReduction:
+                float currentDMGReduction = GetStatValue(PlayerStatType.DMGReduction);
+                OnDMGReductionChanged?.Invoke(currentDMGReduction);
+                break;
+            case PlayerStatType.CriticalChance:
+                float currentCriticalChance = GetStatValue(PlayerStatType.CriticalChance);
+                OnCriticalChanceChanged?.Invoke(currentCriticalChance);
+                break;
+            case PlayerStatType.CriticalDamage:
+                float currentCriticalDamage = GetStatValue(PlayerStatType.CriticalDamage);
+                OnCriticalDamageChanged?.Invoke(currentCriticalDamage);
+                break;
+            default:
+                break;
         }
-
     }
 }
