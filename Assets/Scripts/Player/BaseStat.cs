@@ -5,7 +5,9 @@ using UnityEngine;
 
 public enum StatType
 {
+    MaxHP,
     HP,
+    MaxMP,
     MP,
     Speed,
     Attack,

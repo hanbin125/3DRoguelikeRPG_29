@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class PlayerStat : BaseStat
 {
+    [SerializeField] int _maxHP = 100;
     [SerializeField] int _baseHP = 100;
+    [SerializeField] int _maxMP = 50;
     [SerializeField] int _baseMP = 50;
     [SerializeField] int _baseSpeed = 5;
     [SerializeField] int _baseAttack = 10;
@@ -14,7 +16,17 @@ public class PlayerStat : BaseStat
     [SerializeField] int _baseCriticalChance = 5;
     [SerializeField] float _baseCriticalDamage = 1.25f;
 
+    public event Action<float> OnMaxHPChanged;
     public event Action<float> OnHPChanged;
+    public event Action<float> OnMaxMPChanged;
+    public event Action<float> OnMPChanged;
+    public event Action<float> OnSpeedChanged;
+    public event Action<float> OnAttackChanged;
+    public event Action<float> OnDMGReductionChanged;
+    public event Action<float> OnCriticalChanceChanged;
+    public event Action<float> OnCriticalDamageChanged;
+
+
     private void Awake()
     {
         InitializeStats();
@@ -28,7 +40,9 @@ public class PlayerStat : BaseStat
 
         // 기본 스탯 설정
         SetStatValue(StatType.HP, _baseHP);
+        SetStatValue(StatType.MaxHP, _maxHP);
         SetStatValue(StatType.MP, _baseMP);
+        SetStatValue(StatType.MaxMP, _maxMP);
         SetStatValue(StatType.Attack, _baseAttack);
         SetStatValue(StatType.Speed, _baseSpeed);
         SetStatValue(StatType.DMGReduction, _baseDMGReduction);
@@ -43,12 +57,7 @@ public class PlayerStat : BaseStat
         //float buffBonus = buffBonuses.TryGetValue(type, out float buff) ? buff : 0f;
 
         return baseValue;
-            //+ equipBonus + buffBonus;
-    }
-
-    public void SetBaseHP()
-    {
-        //_hpText.text = GetStatValue(StatType.HP).ToString("F0");
+        //+ equipBonus + buffBonus;
     }
 
     public void AddEquipmentBonus(StatType type, float bonus)
@@ -77,5 +86,15 @@ public class PlayerStat : BaseStat
             float currentHP = GetStatValue(StatType.HP);
             OnHPChanged?.Invoke(currentHP);
         }
+        else if (type == StatType.Speed)
+        {
+            float currentSpeed = GetStatValue(StatType.Speed);
+            OnSpeedChanged?.Invoke(currentSpeed);
+        }
+        else if(type == StatType.MP)
+        {
+
+        }
+
     }
 }

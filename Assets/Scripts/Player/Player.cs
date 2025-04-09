@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 public interface BaseEntity
 {
     void TakeDamage(int damage);
@@ -15,7 +14,7 @@ public class Player : MonoBehaviour, BaseEntity
 {
     private PlayerStat _stats;
 
-    [SerializeField] VariableJoystick _variableJoystick;
+    [SerializeField] FloatingJoystick _floatingJoystick;
     [SerializeField] Rigidbody _rb;
 
     private CurrencyManager currency;
@@ -30,19 +29,20 @@ public class Player : MonoBehaviour, BaseEntity
     }
     public void FixedUpdate()
     {
-        Vector3 direction = Vector3.forward * _variableJoystick.Vertical + Vector3.right * _variableJoystick.Horizontal;
+        Vector3 direction = Vector3.forward * _floatingJoystick.Vertical + Vector3.right * _floatingJoystick.Horizontal;
         _rb.AddForce(direction * _stats.GetStatValue(StatType.Speed) * Time.fixedDeltaTime, ForceMode.VelocityChange);
     }
     public void TakeDamage(int damage)
     {
         float currentHP = _stats.GetStatValue(StatType.HP);
-        _stats.SetStatValue(StatType.HP, currentHP - damage);
+        _stats.SetStatValue(StatType.HP, Mathf.Max(currentHP - damage, 0));
     }
 
     public void Healing(int heal)
     {
         float currentHP = _stats.GetStatValue(StatType.HP);
-        _stats.SetStatValue(StatType.HP, currentHP + heal);
+        float maxHP = _stats.GetStatValue(StatType.MaxHP);
+        _stats.SetStatValue(StatType.HP, Mathf.Min(currentHP + heal, maxHP));
     }
     public float GetCurrentHP()
     {
