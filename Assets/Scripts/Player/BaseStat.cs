@@ -16,6 +16,22 @@ public enum PlayerStatType
     CriticalDamage
 }
 
+public enum EnemyStatType
+{
+    MaxHP,
+    HP,
+    Speed,
+    Attack,
+    Currency
+}
+
+public enum EnemyType
+{
+    Normal,
+    Elite,
+    Boss
+}
+
 public interface IBaseStat<T>
 {
     float GetStatValue(T type);
