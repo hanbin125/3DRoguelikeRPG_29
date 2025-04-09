@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -22,9 +23,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private Stack<PopupUI> popupStack = new Stack<PopupUI>();
     private Dictionary<string, BaseUI> uiList = new Dictionary<string, BaseUI>();
-    private List<PopupUI> activePopups = new List<PopupUI>(); // 활성화된 모든 팝업 추적
+    private Stack<PopupUI> popupStack = new Stack<PopupUI>(); // 원래라면 컴퓨터로 esc누르면 위에 켜져있는 팝업순서대로 삭제를해서 stack이 좋았음 
+    private List<PopupUI> activePopups = new List<PopupUI>(); // 활성화된 모든 팝업 추적 ->모바일때문에 생겼음 
+
+    private Canvas mainCanvas; // 메인 Canvas
 
     private void Awake()
     {
@@ -35,6 +38,36 @@ public class UIManager : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // 메인 Canvas 생성
+        CreateMainCanvas();
+    }
+
+    private void CreateMainCanvas()
+    {
+        GameObject canvasObj = new GameObject("MainCanvas");
+        canvasObj.transform.SetParent(transform);
+        
+        mainCanvas = canvasObj.AddComponent<Canvas>();
+        mainCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        
+        // Canvas Scaler 추가
+        CanvasScaler scaler = canvasObj.AddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920, 1080);
+        
+        // Graphic Raycaster 추가
+        canvasObj.AddComponent<GraphicRaycaster>();
+    }
+
+    private void Start()
+    {
+        // 씬에 있는 모든 UI 찾기 (비활성화된 오브젝트도 포함)
+        var allUIs = FindObjectsOfType<BaseUI>(true);
+        foreach (var ui in allUIs)
+        {
+            RegisterUI(ui);
+        }
     }
 
     public T ShowUI<T>() where T : BaseUI
@@ -45,8 +78,26 @@ public class UIManager : MonoBehaviour
         {
             ui.Show();
             return ui as T;
-            //return (T)ui 형변환 대신 이렇게 형변환을하면  예외를 발생  / as를 사용시 null를반환 지금 ui는 
-            //실제로 popupinventory형식이지만 baseui로 out에서 꺼내지니까 꺼내서 명확하게 형변환을 시켜주는거지 
+        }
+        
+        // Resources에서 프리팹 로드
+        GameObject prefab = Resources.Load<GameObject>($"UI/{key}");
+        if (prefab != null)
+        {
+            // 프리팹 인스턴스화 (메인 Canvas의 자식으로)
+            GameObject go = Instantiate(prefab, mainCanvas.transform);
+            T newUI = go.GetComponent<T>();
+            
+            if (newUI != null)
+            {
+                RegisterUI(newUI);
+                return newUI;
+            }
+            else
+            {
+                Debug.LogError($"{key} 프리팹에 BaseUI 컴포넌트가 없습니다.");
+                Destroy(go);
+            }
         }
         
         return null;
@@ -147,5 +198,14 @@ public class UIManager : MonoBehaviour
         {
             ClosePopupUI();
         }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ShowPopupUI<UIPopupInventory>();
+        }
+    }
+
+    public int GetActivePopupCount()
+    {
+        return activePopups.Count;
     }
 } 
