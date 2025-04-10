@@ -15,7 +15,7 @@ public class UIEquipedItem : PopupUI
     [SerializeField] private TextMeshProUGUI CriticalChance;
     [SerializeField] private TextMeshProUGUI CriticalDamage;
 
-    private ItemData currentItem;
+    private ItemData EquipItem;
 
     protected override void Awake()
     {
@@ -26,38 +26,38 @@ public class UIEquipedItem : PopupUI
     {
         if (item == null) return;
         
-        currentItem = item;
+        EquipItem = item;
         base.Show();
         UpdateUI();
     }
 
     public override void Hide()
     {
-        currentItem = null;
+        EquipItem = null;
         base.Hide();
     }
 
     private void UpdateUI()
     {
-        if (currentItem == null) return;
+        if (EquipItem == null) return;
 
         // 아이템 이미지 설정
-        if (currentItem.Icon != null)
-            itemimage.sprite = currentItem.Icon;
+        if (EquipItem.Icon != null)
+            itemimage.sprite = EquipItem.Icon;
 
         // 능력치 표시
-        power.text = $"공격력: {currentItem.GetOptionValue(ConditionType.Power)}";
-        mana.text = $"마나: {currentItem.GetOptionValue(ConditionType.Mana)}";
-        health.text = $"체력: {currentItem.GetOptionValue(ConditionType.Health)}";
-        speed.text = $"속도: {currentItem.GetOptionValue(ConditionType.Speed)}";
-        Reduction.text = $"피해감소: {currentItem.GetOptionValue(ConditionType.reduction)}";
-        CriticalChance.text = $"치명타확률: {currentItem.GetOptionValue(ConditionType.CriticalChance)}";
-        CriticalDamage.text = $"치명타피해: {currentItem.GetOptionValue(ConditionType.CriticalDamage)}";
+        power.text = $"공격력: {EquipItem.GetOptionValue(ConditionType.Power)}";
+        mana.text = $"마나: {EquipItem.GetOptionValue(ConditionType.Mana)}";
+        health.text = $"체력: {EquipItem.GetOptionValue(ConditionType.Health)}";
+        speed.text = $"속도: {EquipItem.GetOptionValue(ConditionType.Speed)}";
+        Reduction.text = $"피해감소: {EquipItem.GetOptionValue(ConditionType.reduction)}";
+        CriticalChance.text = $"치명타확률: {EquipItem.GetOptionValue(ConditionType.CriticalChance)}";
+        CriticalDamage.text = $"치명타피해: {EquipItem.GetOptionValue(ConditionType.CriticalDamage)}";
     }
 
     protected override void Clear()
     {
         base.Clear();
-        currentItem = null;
+        EquipItem = null;
     }
 }

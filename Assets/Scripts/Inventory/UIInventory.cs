@@ -10,7 +10,14 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private Transform SlotParent;
 
     private InventoryManager inventoryManager;
+    private UIPopupInventory uiPopupInventory;
     private bool isInitialized = false;
+
+    private void Awake()
+    {
+        uiPopupInventory = gameObject.GetComponentInParent<UIPopupInventory>();
+    }
+
 
     // 초기화 (한 번만 실행)
     public void InitSlots()
@@ -24,6 +31,9 @@ public class UIInventory : MonoBehaviour
                 slots.Add(slotobj);
                 slotobj.OnItemClicked += HandleItemOneClick;
             }
+
+
+
             isInitialized = true;
         }
     }
@@ -32,13 +42,13 @@ public class UIInventory : MonoBehaviour
     public void UpdateInventory(InventoryManager manager)
     {
         inventoryManager = manager;
-        
+
         // UI가 초기화되지 않았다면 초기화
         if (!isInitialized)
         {
             InitSlots();
         }
-        
+
         // 데이터 업데이트
         UpdateUI();
     }
@@ -69,22 +79,7 @@ public class UIInventory : MonoBehaviour
         {
             if (slotItemData.item.equipType != EquipType.None && slotItemData.item.useType == UseType.None)
             {
-                // 그 부위에 아이템이 장착 되어있나 없나 
-                if (GameManager.Instance.EquipMananger.EqipDicionary.TryGetValue(slotItemData.item.equipType, out ItemData item))
-                {
-                    //그 부위에 장착 아이템의 ID를 비교 
-                    if (item.id == slotItemData.item.id)
-                    {
-                        //장착중인아이템 
-                        //장착itempopup만 띄워주면된다.
-
-                    }
-                    else
-                    {
-                        //같은 아이템이 아니라면 장착+select item popup까지 같이 띄워준다.
-
-                    }
-                }
+                uiPopupInventory.OnItemSelected(slotItemData.item);
             }
             else
             {
