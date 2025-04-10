@@ -38,18 +38,18 @@ public class TestPlayerUI : MonoBehaviour
         //_criticalDamageText.text = playerStat.GetStatValue(PlayerStatType.CriticalDamage).ToString("F0");
         UpdateCooldownUI();
     }
-    public void UpdateFlashIcon(float time)
-    {
-        if (time > 0)
-        {
-            _flashIcon.gameObject.SetActive(true);
-            _flashTimer.text = time.ToString("F1");
-        }
-        else
-        {
-            _flashIcon.gameObject.SetActive(false);
-        }
-    }
+    //public void UpdateFlashIcon(float time)
+    //{
+    //    if (time > 0)
+    //    {
+    //        _flashIcon.gameObject.SetActive(true);
+    //        _flashTimer.text = time.ToString("F1");
+    //    }
+    //    else
+    //    {
+    //        _flashIcon.gameObject.SetActive(false);
+    //    }
+    //}
 
     void UpdateCooldownUI()
     {
