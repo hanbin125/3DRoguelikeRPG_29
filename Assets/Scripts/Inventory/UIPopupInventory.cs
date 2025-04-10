@@ -64,19 +64,36 @@ public class UIPopupInventory : PopupUI
     {
         if (item == null) return;
 
-        //내가 장착하고 있는 아이템 을 보여주고 
-        // UIEquipedItem 생성하고 아이템 데이터 전달
-        var equipitempopup = UIManager.Instance.ShowPopupUI<UIEquipedItem>();
-        if (equipitempopup != null)
-        {
-            equipitempopup.Show(item);
-        }
+        // 장착한 아이템이 아닌것을 선택할때 
+        // 장착된 아이템이 없다면?
 
-        //장착된 아이템이 아니라면 selecteditem을 보여주기 
-        if (!GameManager.Instance.EquipMananger.EqipDicionary.ContainsKey(item.equipType))
+
+        if (GameManager.Instance.EquipMananger.EquipDicionary.TryGetValue(item.equipType, out ItemData equipitem))
         {
-            // UISelectedItem 생성하고 아이템 데이터 전달
+            //선택한 아이템이 장착아이템과 같은가 ?
+            if (equipitem.id == item.id)
+            {
+                var equipitempopup_02 = UIManager.Instance.ShowPopupUI<UIEquipedItem>();
+                if (equipitempopup_02 != null)
+                {
+                    equipitempopup_02.Show(GameManager.Instance.EquipMananger.EquipDicionary[equipitem.equipType]);
+                }
+            }
             var selectedItemPopup = UIManager.Instance.ShowPopupUI<UISelectedItem>();
+            var equipitempopup = UIManager.Instance.ShowPopupUI<UIEquipedItem>();
+            if (selectedItemPopup != null)
+            {
+                selectedItemPopup.Show(item);
+            }
+            if (equipitempopup != null)
+            {
+                equipitempopup.Show(GameManager.Instance.EquipMananger.EquipDicionary[item.equipType]);
+            }
+        }
+        else
+        {
+            var selectedItemPopup = UIManager.Instance.ShowPopupUI<UISelectedItem>();
+            //내가 장착한 아이템이 없을때 
             if (selectedItemPopup != null)
             {
                 selectedItemPopup.Show(item);

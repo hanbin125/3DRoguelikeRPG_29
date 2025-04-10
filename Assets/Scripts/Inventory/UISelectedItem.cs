@@ -35,7 +35,7 @@ public class UISelectedItem : PopupUI
     public void Show(ItemData item)
     {
         if (item == null) return;
-        
+
         currentItem = item;
         base.Show();
         UpdateUI();
@@ -69,11 +69,27 @@ public class UISelectedItem : PopupUI
     {
         if (currentItem != null)
         {
-            // 직접 장착 로직 구현
-            GameManager.Instance.EquipMananger.Eqipitem(currentItem);
-            Debug.Log($"{currentItem.itemName} 장착");
+            // GameManager.Instance 확인
+            if (GameManager.Instance == null)
+            {
+                Debug.LogError("GameManager.Instance is null!");
+                return;
+            }
+            // EquipMananger 확인
+            if (GameManager.Instance.EquipMananger == null)
+            {
+                Debug.LogError("EquipMananger is null!");
+                return;
+            }
+            // 직접 장착 로직 구현 
+            GameManager.Instance.EquipMananger.Equipitem(currentItem);
             // 팝업 닫기
             UIManager.Instance.ClosePopupUI(this);
+            Debug.Log($"{currentItem.itemName} 장착");
+        }
+        else
+        {
+            Debug.Log("선택된 아이템의 정보가 없습니다.");
         }
     }
 
