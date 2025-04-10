@@ -53,4 +53,8 @@ public class Test : MonoBehaviour
         _player.CriticalDamageUp(0.25f);
     }
     
+    public void Dash()
+    {
+        _player.Dash();
+    }
 }
