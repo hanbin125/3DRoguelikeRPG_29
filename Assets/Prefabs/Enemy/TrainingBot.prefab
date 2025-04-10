@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 478963447044917949}
   - component: {fileID: 2385832812210972523}
   - component: {fileID: 8877751361733157290}
+  - component: {fileID: 2757196997137046735}
   - component: {fileID: 6989626496270678351}
+  - component: {fileID: 4131601597733009817}
   m_Layer: 0
   m_Name: TrainingBot
   m_TagString: Untagged
@@ -108,6 +110,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2757196997137046735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4661205358422543490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e678d8b891678e418b2236674f2cdbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6989626496270678351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,3 +135,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statData: {fileID: 11400000, guid: 7111f3499746c0d4ca6c8a925fe38792, type: 2}
+--- !u!114 &4131601597733009817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4661205358422543490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fce238e373242964b949b014492e0645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

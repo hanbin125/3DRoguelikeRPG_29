@@ -23,7 +23,9 @@ public enum EnemyStatType
     HP,
     Speed,
     Attack,
-    Currency
+    Currency,
+    AttackRange,
+    AttackCooldown
 }
 
 public enum EnemyType

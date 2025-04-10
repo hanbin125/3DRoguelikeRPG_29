@@ -17,6 +17,10 @@ public class EnemyStatData : ScriptableObject
     [SerializeField] private int _speed;
     [SerializeField] private int _currency;
 
+    [Header("전투 정보")]
+    [SerializeField] private float _attackRange;
+    [SerializeField] private float _attackCooldown;
+
     public int Index => _index;
     public string EnemyName => _enemyName;
     public EnemyType EnemyType => _enemyType;
@@ -25,4 +29,6 @@ public class EnemyStatData : ScriptableObject
     public int Attack => _attack;
     public int Speed => _speed;
     public int Currency => _currency;
+    public float AttackRange => _attackRange;
+    public float AttackCooldown => _attackCooldown;
 }

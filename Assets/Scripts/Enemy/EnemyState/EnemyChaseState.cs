@@ -14,11 +14,18 @@ public class EnemyChaseState : IEnemyState
         {
             _target = player.transform;
         }
+        
+        stopDistance = controller.GetStat(EnemyStatType.AttackRange);
+        controller.agent.isStopped = false;
+
+        controller.animator?.SetBool("isMoving", true);
         Debug.Log("Chase 상태 진입");
     }
 
     public void ExitState(EnemyController controller)
     {
+        controller.agent.isStopped = true;
+        controller.animator?.SetBool("isMoving",false);
         Debug.Log("Chase 상태 종료");
     }
 
@@ -34,12 +41,14 @@ public class EnemyChaseState : IEnemyState
         //플레이어와 거리가 가까워지면 공격 상태로 전환
         if(distance <= stopDistance)
         {
-            //controller.ChageState(new EnemyAttackState());
+            controller.ChageState(new EnemyAttackState());
             return;
         }
 
-        float speed = controller.GetSpeed();
+        controller.agent.SetDestination(_target.position);
+
+        /*float speed = controller.GetSpeed();
         Vector3 direction = (_target.position - controller.transform.position).normalized;
-        controller.transform.position += direction * speed * Time.deltaTime;
+        controller.transform.position += direction * speed * Time.deltaTime;*/
     }
 }
