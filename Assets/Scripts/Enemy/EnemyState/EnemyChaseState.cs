@@ -8,16 +8,15 @@ public class EnemyChaseState : IEnemyState
     private float stopDistance = 1.5f; //플레리어를 공격하기 전 멈추는 거리
 
     public void EnterState(EnemyController controller)
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if(player == null)
+    {        
+        _target = controller.GetTarget();
+        if(_target == null)
         {
-            _target = player.transform;
+            Debug.Log("타겟이 없어 Idle상태로 전환");
+            controller.ChageState(EnemyStateType.Idle);
         }
-        
         stopDistance = controller.GetStat(EnemyStatType.AttackRange);
         controller.agent.isStopped = false;
-
         controller.animator?.SetBool("isMoving", true);
         Debug.Log("Chase 상태 진입");
     }
@@ -41,7 +40,7 @@ public class EnemyChaseState : IEnemyState
         //플레이어와 거리가 가까워지면 공격 상태로 전환
         if(distance <= stopDistance)
         {
-            controller.ChageState(new EnemyAttackState());
+            controller.ChageState(EnemyStateType.Attack);
             return;
         }
 

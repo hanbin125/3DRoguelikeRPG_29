@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: TrainingBot
   m_EditorClassIdentifier: 
   _index: 0
-  _enemyName: 
-  _enemyType: 0
-  _maxHP: 0
-  _HP: 0
-  _attack: 0
-  _speed: 0
-  _currency: 0
+  _enemyName: "\uD6C8\uB828\uC6A9 \uBD07"
+  _enemyType: 2
+  _maxHP: 100000
+  _HP: 100000
+  _attack: 10
+  _speed: 10
+  _currency: 10
+  _attackRange: 0
+  _attackCooldown: 0

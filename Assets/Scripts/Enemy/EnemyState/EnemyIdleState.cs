@@ -14,10 +14,12 @@ public class EnemyIdleState : IEnemyState
     }
     public void UpdateState(EnemyController controller)
     {
+        Transform target = controller.GetTarget();
+        if (target == null) return;
         //추격하기 최소거리에 도달하면 추격상태 전환
-        if(Vector3.Distance(controller.transform.position, Vector3.zero) < 5f)
+        if (Vector3.Distance(controller.transform.position, target.position) < 5f)
         {
-            controller.ChageState(new EnemyChaseState());
+            controller.ChageState(EnemyStateType.Chase);
         }
     }
     
