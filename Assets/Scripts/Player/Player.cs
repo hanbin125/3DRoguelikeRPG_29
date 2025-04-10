@@ -41,19 +41,28 @@ public class Player : MonoBehaviour, BaseEntity
     {
         _playerStat.InitBaseStat(statData);
     }
-    public void FixedUpdate()
+    public void DirectionCheck()
     {
         Vector3 direction = Vector3.forward * _floatingJoystick.Vertical + Vector3.right * _floatingJoystick.Horizontal;
 
-        if (direction.sqrMagnitude > 0.01f)
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        Vector3 keyboardInput = Vector3.forward * v + Vector3.right * h;
+
+        Vector3 inputDir = keyboardInput.sqrMagnitude > 0.01f ? keyboardInput : direction;
+        if (inputDir.sqrMagnitude > 0.01f)
         {
-            direction = direction.normalized;
-            _rb.velocity = direction * _playerStat.GetStatValue(PlayerStatType.Speed);
+            inputDir = inputDir.normalized;
+            _rb.velocity = inputDir * _playerStat.GetStatValue(PlayerStatType.Speed);
         }
         else
         {
             _rb.velocity = Vector3.zero;
         }
+    }
+    public void FixedUpdate()
+    {
+        DirectionCheck();
     }
 
     public void MaxHPUp(float value)
@@ -136,10 +145,16 @@ public class Player : MonoBehaviour, BaseEntity
         if (Time.time >= lastFlashTime + 5)
         {
             Vector3 direction = Vector3.forward * _floatingJoystick.Vertical + Vector3.right * _floatingJoystick.Horizontal;
+
+            float h = Input.GetAxis("Horizontal");
+            float v = Input.GetAxis("Vertical");
+            Vector3 keyboardInput = Vector3.forward * v + Vector3.right * h;
+
+            Vector3 inputDir = keyboardInput.sqrMagnitude > 0.01f ? keyboardInput : direction;
             direction = direction.normalized;
 
             Vector3 targetPos = transform.position + direction * 5;
-            //레이
+
             if (!Physics.Raycast(transform.position, direction, 5, obstacleLayer))
             {
                 _rb.MovePosition(targetPos);
