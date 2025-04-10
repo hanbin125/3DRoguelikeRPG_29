@@ -31,6 +31,7 @@ public class EquipMananger : MonoBehaviour
         //장착 
         EquipDicionary.Add(itemData.equipType, itemData);
         // 능력치 더해주고 
+        AddStats();
 
         // 장착 관련 이벤트를 발생
 
@@ -39,8 +40,9 @@ public class EquipMananger : MonoBehaviour
     {
         if (EquipDicionary.TryGetValue(itemData.equipType, out ItemData eqipeditemed))
         {
-
+            EquipDicionary.Remove(eqipeditemed.equipType);
         }
+        AddStats();
     }
     private void AddStats()
     {
@@ -49,7 +51,7 @@ public class EquipMananger : MonoBehaviour
 
         // 모든 장비 스탯 보너스 초기화 (이전 장비 효과 제거)
         PlayerStat playerStat = GameManager.Instance.PlayerManager.Player._playerStat;
-        //playerStat.ClearEquipmentBonuses();  // 이 메서드는 PlayerStat에 추가해야 함
+        playerStat.ClearEquipmentBonuses();  // 이 메서드는 PlayerStat에 추가해야 함
 
         // 모든 장착된 아이템에서 스탯 보너스 계산
         foreach (var item in EquipDicionary.Values)
@@ -63,11 +65,17 @@ public class EquipMananger : MonoBehaviour
                 PlayerStatType statType = ConvertToPlayerStatType(conditionType);
                 float value = option.GetValueWithLevel(item.enhancementLevel);
 
+                //Dictionary에 존재하지 않는 키에 값을 더하려고 하면 KeyNotFoundException 예외가 발생
+                //때문에 값이 없다면 0으로 초기화를 해주고 값을 더해주는 방식 
+                if (!totalconditionTypes.ContainsKey(statType))
+                {
+                    totalconditionTypes[statType] = 0f;
+                }
                 totalconditionTypes[statType] += value;
             }
         }
 
-        //playerStat.AddEquipmentBonus(totalconditionTypes);
+        playerStat.AddEquipmentBonus(totalconditionTypes);
 
     }
 
@@ -79,9 +87,9 @@ public class EquipMananger : MonoBehaviour
             case ConditionType.Power:
                 return PlayerStatType.Attack;
             case ConditionType.Health:
-                return PlayerStatType.HP;
+                return PlayerStatType.MaxHP;
             case ConditionType.Mana:
-                return PlayerStatType.MP;
+                return PlayerStatType.MaxMP;
             case ConditionType.Speed:
                 return PlayerStatType.Speed;
             case ConditionType.reduction:

@@ -20,7 +20,13 @@ public class PlayerStat : BaseStat<PlayerStatType>
     /// </summary>
     protected override void InitializeStats()
     {
+        //stas를 0으로 초기화 
         base.InitializeStats();
+        foreach (PlayerStatType type in Enum.GetValues(typeof(PlayerStatType)))
+        {
+            _equipmentBonuses[type] = 0f;
+            _buffBonuses[type] = 0f;
+        }
     }
 
     public void InitBaseStat(PlayerStatData playerStatData)
@@ -37,7 +43,7 @@ public class PlayerStat : BaseStat<PlayerStatType>
         else
         {
             Debug.LogWarning("PlayerStatData 이 없습니다.");
-        }
+        }
     }
     public override float GetStatValue(PlayerStatType type)
     {
@@ -48,15 +54,13 @@ public class PlayerStat : BaseStat<PlayerStatType>
         return baseValue + equipBonus + buffBonus;
     }
 
-    public void AddEquipmentBonus(PlayerStatType type, float bonus)
+    public void AddEquipmentBonus(Dictionary<PlayerStatType, float> totalconditionTypes)
     {
-        if (!_equipmentBonuses.ContainsKey(type))
-        { 
-            _equipmentBonuses[type] = 0f;
+        foreach (var stat in totalconditionTypes)
+        {
+            _equipmentBonuses[stat.Key] += stat.Value;
         }
-
-        _equipmentBonuses[type] += bonus;
-        OnStatChanged(type);
+        OnStatChanged();
     }
 
     public void AddBuff(PlayerStatType type, float bonus)
@@ -67,12 +71,23 @@ public class PlayerStat : BaseStat<PlayerStatType>
         }
 
         _buffBonuses[type] += bonus;
-        OnStatChanged(type);
+        OnStatChanged();
     }
 
-    protected override void OnStatChanged(PlayerStatType type)
+    protected override void OnStatChanged()
     {
-        base.OnStatChanged(type);
+        base.OnStatChanged();
+        OnStatsChanged?.Invoke(this);
+    }
+    /// <summary>
+    /// 장비 보너스 스텟 초기화 
+    /// </summary>
+    internal void ClearEquipmentBonuses()
+    {
+        foreach (PlayerStatType type in Enum.GetValues(typeof(PlayerStatType)))
+        {
+            _equipmentBonuses[type] = 0f;
+        }
         OnStatsChanged?.Invoke(this);
     }
 }

@@ -44,7 +44,7 @@ public abstract class BaseStat<T> : MonoBehaviour, IBaseStat<T> where T : Enum
     public virtual void SetStatValue(T type, float value)
     {
         stats[type] = value;
-        OnStatChanged(type);
+        OnStatChanged();
     }
 
     public virtual void ModifyStat(T type, float amount)
@@ -52,11 +52,11 @@ public abstract class BaseStat<T> : MonoBehaviour, IBaseStat<T> where T : Enum
         if (stats.ContainsKey(type))
         {
             stats[type] += amount;
-            OnStatChanged(type);
+            OnStatChanged();
         }
     }
 
-    protected virtual void OnStatChanged(T type)
+    protected virtual void OnStatChanged()
     {
 
     }

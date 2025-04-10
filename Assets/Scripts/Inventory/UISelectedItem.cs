@@ -69,7 +69,18 @@ public class UISelectedItem : PopupUI
     {
         if (currentItem != null)
         {
-           
+            // GameManager.Instance 확인
+            if (GameManager.Instance == null)
+            {
+                Debug.LogError("GameManager.Instance is null!");
+                return;
+            }
+            // EquipMananger 확인
+            if (GameManager.Instance.EquipMananger == null)
+            {
+                Debug.LogError("EquipMananger is null!");
+                return;
+            }
             // 직접 장착 로직 구현 
             GameManager.Instance.EquipMananger.Equipitem(currentItem);
             // 팝업 닫기
