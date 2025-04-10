@@ -9,35 +9,51 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private UISlot uiSlotPrefab;
     [SerializeField] private Transform SlotParent;
 
+    private InventoryManager inventoryManager;
+    private bool isInitialized = false;
 
-    public void Init()
+    // 초기화 (한 번만 실행)
+    public void InitSlots()
     {
-        //슬롯 데이터 
-        slots = new List<UISlot>();
-        //슬롯 생성 
-        for (int i = 0; i < MaxSlots; i++)
+        if (!isInitialized)
         {
-            UISlot slotobj = Instantiate(uiSlotPrefab, SlotParent);
-            slots.Add(slotobj);
-        }
-
-        //데이터 넣어주기 
-        UpdateUI();
-
-        //아이템 클릭이벤트를 여기서 관리하기 위해서 이벤트를 연결 
-        foreach (var slot in slots)
-        {
-            slot.OnItemClicked += HandleItemOneClick;
+            slots = new List<UISlot>();
+            for (int i = 0; i < MaxSlots; i++)
+            {
+                UISlot slotobj = Instantiate(uiSlotPrefab, SlotParent);
+                slots.Add(slotobj);
+                slotobj.OnItemClicked += HandleItemOneClick;
+            }
+            isInitialized = true;
         }
     }
 
+    // 데이터 업데이트 (필요할 때마다 실행)
+    public void UpdateInventory(InventoryManager manager)
+    {
+        inventoryManager = manager;
+        
+        // UI가 초기화되지 않았다면 초기화
+        if (!isInitialized)
+        {
+            InitSlots();
+        }
+        
+        // 데이터 업데이트
+        UpdateUI();
+    }
+    /// <summary>
+    /// 여기서는 데이터를 가지고 show 보여주기만 하는 곳 >> 데이터를 관리 >inventoryManager
+    /// </summary>
     private void UpdateUI()
     {
+        if (inventoryManager == null) return;
+
         for (int i = 0; i < slots.Count; i++)
         {
-            if (i < GameManager.Instance.InventoryManager.slotItemDatas.Count)
+            if (i < inventoryManager.slotItemDatas.Count)
             {
-                slots[i].SetSlotData(GameManager.Instance.InventoryManager.slotItemDatas[i]);
+                slots[i].SetSlotData(inventoryManager.slotItemDatas[i]);
             }
         }
     }

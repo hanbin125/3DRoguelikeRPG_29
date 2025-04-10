@@ -4,81 +4,75 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PlayerStat : BaseStat
+public class PlayerStat : BaseStat<PlayerStatType>
 {
-    [SerializeField] int _baseHP = 100;
-    [SerializeField] int _baseMP = 50;
-    [SerializeField] int _baseSpeed = 5;
-    [SerializeField] int _baseAttack = 10;
-    [SerializeField] float _baseDMGReduction = 0f;
-    [SerializeField] int _baseCriticalChance = 5;
-    [SerializeField] float _baseCriticalDamage = 1.25f;
-    [SerializeField] TextMeshProUGUI _hpText;
-    [SerializeField] TextMeshProUGUI _mpText;
-    [SerializeField] TextMeshProUGUI _attackText;
-    [SerializeField] TextMeshProUGUI _speedText;
-    [SerializeField] TextMeshProUGUI _dmgReductionText;
-    [SerializeField] TextMeshProUGUI _criticalChanceText;
-    [SerializeField] TextMeshProUGUI _criticalDamageText;
+    public event Action<PlayerStat> OnStatsChanged;
 
-    private void Start()
+    private Dictionary<PlayerStatType, float> _equipmentBonuses = new Dictionary<PlayerStatType, float>();
+    private Dictionary<PlayerStatType, float> _buffBonuses = new Dictionary<PlayerStatType, float>();
+    //private Dictionary<PlayerStatType, float> _totalStats = new Dictionary<PlayerStatType, float>();
+    private void Awake()
     {
         InitializeStats();
-        SetBaseHP();
     }
-    private Dictionary<StatType, float> equipmentBonuses = new Dictionary<StatType, float>();
-    private Dictionary<StatType, float> buffBonuses = new Dictionary<StatType, float>();
-
+    /// <summary>
+    /// 스탯 0으로 초기화
+    /// </summary>
     protected override void InitializeStats()
     {
         base.InitializeStats();
-
-        // 기본 스탯 설정
-        SetStatValue(StatType.HP, _baseHP);
-        SetStatValue(StatType.MP, _baseMP);
-        SetStatValue(StatType.Attack, _baseAttack);
-        SetStatValue(StatType.Speed, _baseSpeed);
-        SetStatValue(StatType.DMGReduction, _baseDMGReduction);
-        SetStatValue(StatType.CriticalChance, _baseCriticalChance);
-        SetStatValue(StatType.CriticalDamage, _baseCriticalDamage);
     }
 
-    public override float GetStatValue(StatType type)
+    public void InitBaseStat(PlayerStatData playerStatData)
+    {
+        if (playerStatData != null)
+        {
+            // ScriptableObject에서 기본값을 가져와 초기화
+            foreach (PlayerStatType type in System.Enum.GetValues(typeof(PlayerStatType)))
+            {
+                float baseValue = playerStatData.GetBaseValue(type);
+                SetStatValue(type, baseValue);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("PlayerStatData 이 없습니다.");
+        }
+    }
+    public override float GetStatValue(PlayerStatType type)
     {
         float baseValue = base.GetStatValue(type);
-        //float equipBonus = equipmentBonuses.TryGetValue(type, out float equip) ? equip : 0f;
-        //float buffBonus = buffBonuses.TryGetValue(type, out float buff) ? buff : 0f;
+        float equipBonus = _equipmentBonuses.TryGetValue(type, out float equip) ? equip : 0f;
+        float buffBonus = _buffBonuses.TryGetValue(type, out float buff) ? buff : 0f;
 
-        return baseValue;
-            //+ equipBonus + buffBonus;
+        return baseValue + equipBonus + buffBonus;
     }
 
-    public void SetBaseHP()
+    public void AddEquipmentBonus(PlayerStatType type, float bonus)
     {
-        //_hpText.text = GetStatValue(StatType.HP).ToString("F0");
-    }
+        if (!_equipmentBonuses.ContainsKey(type))
+        { 
+            _equipmentBonuses[type] = 0f;
+        }
 
-    public void AddEquipmentBonus(StatType type, float bonus)
-    {
-        if (!equipmentBonuses.ContainsKey(type))
-            equipmentBonuses[type] = 0f;
-
-        equipmentBonuses[type] += bonus;
+        _equipmentBonuses[type] += bonus;
         OnStatChanged(type);
     }
 
-    public void AddBuff(StatType type, float bonus)
+    public void AddBuff(PlayerStatType type, float bonus)
     {
-        if (!buffBonuses.ContainsKey(type))
-            buffBonuses[type] = 0f;
+        if (!_buffBonuses.ContainsKey(type))
+        {
+            _buffBonuses[type] = 0f;
+        }
 
-        buffBonuses[type] += bonus;
+        _buffBonuses[type] += bonus;
         OnStatChanged(type);
     }
 
-    protected override void OnStatChanged(StatType type)
+    protected override void OnStatChanged(PlayerStatType type)
     {
         base.OnStatChanged(type);
-        // UI 업데이트 등 추가 작업
-    }
+        OnStatsChanged?.Invoke(this);
+    }
 }

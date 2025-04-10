@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipItem : PopupUI
+public class UIEquipedItem : PopupUI
 {
     [SerializeField] private Image itemimage;
     [SerializeField] private TextMeshProUGUI power;
@@ -17,6 +17,11 @@ public class EquipItem : PopupUI
 
     private ItemData currentItem;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        UIManager.Instance.RegisterUI(this);
+    }
     public void Show(ItemData item)
     {
         if (item == null) return;
