@@ -90,7 +90,11 @@ public class ItemData : ScriptableObject
     public Sprite Icon;
     public GameObject itemObj;
 
-    // 장비 옵션 값 얻기
+    /// <summary>
+    /// 장비 옵션 값 얻기
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public float GetOptionValue(ConditionType type)
     {
         foreach (ItemOption option in options)
