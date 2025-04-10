@@ -15,6 +15,7 @@ public class PlayerStat : BaseStat<PlayerStatType>
     [SerializeField] float _baseDMGReduction = 1f;
     [SerializeField] int _baseCriticalChance = 5;
     [SerializeField] float _baseCriticalDamage = 1.25f;
+    //[SerializeField] float cooldown = 3f;
 
     public event Action<float> OnMaxHPChanged;
     public event Action<float> OnHPChanged;

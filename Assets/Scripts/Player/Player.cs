@@ -9,6 +9,7 @@ public interface BaseEntity
     void BaseMPUp(float currentMP);
     void SpeedUp(float speed);
     void TakeDamage(int damage);
+    //void Hit(int damage);
     void AttackUp(float attack);
     void DMGReductionUp(float damageReduction);
     void CriticalChanceUp(float criticalChance);
