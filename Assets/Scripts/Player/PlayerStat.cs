@@ -12,7 +12,7 @@ public class PlayerStat : BaseStat<PlayerStatType>
     [SerializeField] int _baseMP = 50;
     [SerializeField] int _baseSpeed = 5;
     [SerializeField] int _baseAttack = 10;
-    [SerializeField] float _baseDMGReduction = 0f;
+    [SerializeField] float _baseDMGReduction = 1f;
     [SerializeField] int _baseCriticalChance = 5;
     [SerializeField] float _baseCriticalDamage = 1.25f;
 
