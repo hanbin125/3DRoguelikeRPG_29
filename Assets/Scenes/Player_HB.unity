@@ -1274,6 +1274,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2360628105991517155, guid: aa66caa538355964eb3fef54f92d0e4c, type: 3}
+      propertyPath: statData
+      value: 
+      objectReference: {fileID: 11400000, guid: 0e73e0b7c364caa4e924062601b3b565, type: 2}
+    - target: {fileID: 2360628105991517155, guid: aa66caa538355964eb3fef54f92d0e4c, type: 3}
       propertyPath: _floatingJoystick
       value: 
       objectReference: {fileID: 1079076843}

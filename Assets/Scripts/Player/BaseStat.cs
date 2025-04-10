@@ -14,7 +14,7 @@ public enum PlayerStatType
     DMGReduction,
     CriticalChance,
     CriticalDamage,
-    Cooltime
+    DashCooltime
 }
 
 public interface IBaseStat<T>
