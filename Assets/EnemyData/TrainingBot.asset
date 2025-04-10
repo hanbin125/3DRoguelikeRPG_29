@@ -20,5 +20,5 @@ MonoBehaviour:
   _attack: 10
   _speed: 10
   _currency: 10
-  _attackRange: 0
-  _attackCooldown: 0
+  _attackRange: 10
+  _attackCooldown: 1

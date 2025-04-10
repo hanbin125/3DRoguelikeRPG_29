@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDeadState : MonoBehaviour
+public class EnemyDeadState : IEnemyState
 {
-    // Start is called before the first frame update
-    void Start()
+    private float _deadDuration;//죽은 후 몇 초 뒤 제거
+    private float _timer = 0f;
+    public void EnterState(EnemyController controller)
     {
-        
+        _timer = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ExitState(EnemyController controller)
     {
-        
+
+    }
+
+    public void UpdateState(EnemyController controller)
+    {
+        _timer += Time.deltaTime;
+        if (_timer >= _deadDuration)
+        {
+            Object.Destroy(controller.gameObject);
+            Debug.Log("오브젝트 제거");
+        }
     }
 }

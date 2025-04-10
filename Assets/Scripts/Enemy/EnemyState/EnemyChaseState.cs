@@ -16,15 +16,13 @@ public class EnemyChaseState : IEnemyState
             controller.ChageState(EnemyStateType.Idle);
         }
         stopDistance = controller.GetStat(EnemyStatType.AttackRange);
-        controller.agent.isStopped = false;
-        controller.animator?.SetBool("isMoving", true);
+        //controller.animator?.SetBool("isMoving", true);
         Debug.Log("Chase 상태 진입");
     }
 
     public void ExitState(EnemyController controller)
     {
-        controller.agent.isStopped = true;
-        controller.animator?.SetBool("isMoving",false);
+        //controller.animator?.SetBool("isMoving",false);
         Debug.Log("Chase 상태 종료");
     }
 
@@ -43,11 +41,8 @@ public class EnemyChaseState : IEnemyState
             controller.ChageState(EnemyStateType.Attack);
             return;
         }
-
-        controller.agent.SetDestination(_target.position);
-
-        /*float speed = controller.GetSpeed();
+        float speed = controller.GetSpeed();
         Vector3 direction = (_target.position - controller.transform.position).normalized;
-        controller.transform.position += direction * speed * Time.deltaTime;*/
+        controller.transform.position += direction * speed * Time.deltaTime;
     }
 }

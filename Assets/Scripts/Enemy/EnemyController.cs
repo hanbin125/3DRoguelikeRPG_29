@@ -12,11 +12,9 @@ public interface IEnemyState
 public enum EnemyStateType
 {
     Idle,
-    //Patrol,
     Chase,
     Attack,
-    //Hit,
-    //Dead
+    Dead
 }
 public class EnemyController : MonoBehaviour
 {
@@ -24,19 +22,27 @@ public class EnemyController : MonoBehaviour
     private IEnemyState _currentState;
 
     public EnemyStateType CurrentStateType { get; private set; } = EnemyStateType.Idle;
-    public Animator animator {  get; private set; }
-    public NavMeshAgent agent { get; private set; }
+    //public Animator animator {  get; private set; }
 
     private void Awake()
     {
         _enemy = GetComponent<Enemy>();
-        animator = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
+        //animator = GetComponent<Animator>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        //agent.speed = GetSpeed();
+        if (_enemy == null)
+        {
+            Debug.LogError("[EnemyController] _enemy가 null입니다.");
+            return;
+        }
+
+        if (_enemy.Stat == null)
+        {
+            Debug.LogError("[EnemyController] _enemy.Stat이 null입니다.");
+            return;
+        }
         ChageState(EnemyStateType.Idle);
     }
 
@@ -72,6 +78,7 @@ public class EnemyController : MonoBehaviour
             EnemyStateType.Idle => new EnemyIdleState(),
             EnemyStateType.Chase => new EnemyChaseState(),
             EnemyStateType.Attack => new EnemyAttackState(),
+            EnemyStateType.Dead => new EnemyDeadState(),
             _ => null
         };
     }

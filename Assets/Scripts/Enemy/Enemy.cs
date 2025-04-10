@@ -13,7 +13,9 @@ public class Enemy : MonoBehaviour
         Stat = GetComponent<EnemyStat>();
         CachePlayer();
     }
-    //플레이어 찾기
+    /// <summary>
+    /// 플레이어 찾기
+    /// </summary>
     private void CachePlayer()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -22,11 +24,14 @@ public class Enemy : MonoBehaviour
             PlayerTarget = player.transform;
         }
     }
-    //플레이어를 찾지 못하면 다시 시도
+    /// <summary>
+    /// 플레이어를 찾지 못하면 다시 시도
+    /// </summary>
     public Transform GetPlayerTarget()
     {
         if (PlayerTarget == null)
         {
+            Debug.Log("플레이어를 찾지 못함");
             CachePlayer();
         }
         return PlayerTarget;
@@ -46,7 +51,6 @@ public class Enemy : MonoBehaviour
         
         //임시코드
         Debug.Log($"사망, 골드 {drop} 드랍");
-        Destroy(gameObject);
     }
 
 }
