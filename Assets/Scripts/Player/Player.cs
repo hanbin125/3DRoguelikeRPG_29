@@ -9,6 +9,7 @@ public interface BaseEntity
     void BaseMPUp(float currentMP);
     void SpeedUp(float speed);
     void TakeDamage(int damage);
+    void Hit();
     void AttackUp(float attack);
     void DMGReductionUp(float damageReduction);
     void CriticalChanceUp(float criticalChance);
@@ -21,6 +22,8 @@ public interface BaseEntity
 
 public class Player : MonoBehaviour, BaseEntity
 {
+    [SerializeField] private PlayerStatData statData;
+
     private PlayerStat _stats;
 
     [SerializeField] FloatingJoystick _floatingJoystick;
@@ -35,6 +38,10 @@ public class Player : MonoBehaviour, BaseEntity
         currency = GetComponent<CurrencyManager>();
         // 골드 기본값 
         currency.AddCurrency(CurrencyType.Gold, 1000);
+    }
+    private void Start()
+    {
+        _stats.InitBaseStat(statData);
     }
     public void FixedUpdate()
     {
@@ -84,7 +91,26 @@ public class Player : MonoBehaviour, BaseEntity
         float currentHP = _stats.GetStatValue(PlayerStatType.HP);
         _stats.SetStatValue(PlayerStatType.HP, Mathf.Max(currentHP - damage, 0));
     }
+    public void Hit()
+    {
+        float baseAttack = _stats.GetStatValue(PlayerStatType.Attack);
+        float critChance = _stats.GetStatValue(PlayerStatType.CriticalChance);
+        float critDamage = _stats.GetStatValue(PlayerStatType.CriticalDamage);
 
+        bool isCrit = UnityEngine.Random.Range(0f, 100f) < critChance;
+        float finalDamage = isCrit ? baseAttack * critDamage : baseAttack;
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, 2.5f); // 2.5f 범위 안의 적
+        foreach (Collider col in hits)
+        {
+            BaseEntity enemy = col.GetComponent<BaseEntity>();
+            if (enemy != null && !ReferenceEquals(enemy, this))
+            {
+                enemy.TakeDamage((int)finalDamage);
+                Debug.Log($"{enemy}에게 {finalDamage} 데미지 ({(isCrit ? "CRI!" : "Normal")})");
+            }
+        }
+    }
     public void AttackUp(float attack)
     {
         _stats.ModifyStat(PlayerStatType.Attack, attack);
