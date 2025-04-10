@@ -15,16 +15,13 @@ public interface BaseEntity
     void CriticalChanceUp(float criticalChance);
     void CriticalDamageUp(float criticalDamage);
     bool IsDead();
-
-    //float GetCurrentHP();
-
 }
 
 public class Player : MonoBehaviour, BaseEntity
 {
     [SerializeField] private PlayerStatData statData;
 
-    private PlayerStat _stats;
+    public PlayerStat _playerStat;
 
     [SerializeField] FloatingJoystick _floatingJoystick;
     [SerializeField] Rigidbody _rb;
@@ -34,14 +31,14 @@ public class Player : MonoBehaviour, BaseEntity
 
     private void Awake()
     {
-        _stats = GetComponent<PlayerStat>();
+        _playerStat = GetComponent<PlayerStat>();
         currency = GetComponent<CurrencyManager>();
         // 골드 기본값 
         currency.AddCurrency(CurrencyType.Gold, 1000);
     }
     private void Start()
     {
-        _stats.InitBaseStat(statData);
+        _playerStat.InitBaseStat(statData);
     }
     public void FixedUpdate()
     {
@@ -50,7 +47,7 @@ public class Player : MonoBehaviour, BaseEntity
         if (direction.sqrMagnitude > 0.01f)
         {
             direction = direction.normalized;
-            _rb.velocity = direction * _stats.GetStatValue(PlayerStatType.Speed);
+            _rb.velocity = direction * _playerStat.GetStatValue(PlayerStatType.Speed);
         }
         else
         {
@@ -60,42 +57,42 @@ public class Player : MonoBehaviour, BaseEntity
 
     public void MaxHPUp(float value)
     {
-        _stats.ModifyStat(PlayerStatType.MaxHP, value);
-        _stats.ModifyStat(PlayerStatType.HP, value);
+        _playerStat.ModifyStat(PlayerStatType.MaxHP, value);
+        _playerStat.ModifyStat(PlayerStatType.HP, value);
     }
     public void Healing(int value)
     {
-        float maxHP = _stats.GetStatValue(PlayerStatType.MaxHP);
-        float currentHP = _stats.GetStatValue(PlayerStatType.HP);
-        _stats.SetStatValue(PlayerStatType.HP, Mathf.Min(currentHP + value, maxHP));
+        float maxHP = _playerStat.GetStatValue(PlayerStatType.MaxHP);
+        float currentHP = _playerStat.GetStatValue(PlayerStatType.HP);
+        _playerStat.SetStatValue(PlayerStatType.HP, Mathf.Min(currentHP + value, maxHP));
     }
     public void MaxMPUp(float value)
     {
-        _stats.ModifyStat(PlayerStatType.MaxMP, value);
-        _stats.ModifyStat(PlayerStatType.MP, value);
+        _playerStat.ModifyStat(PlayerStatType.MaxMP, value);
+        _playerStat.ModifyStat(PlayerStatType.MP, value);
     }
     public void BaseMPUp(float value)
     {
-        float maxMP = _stats.GetStatValue(PlayerStatType.MaxMP);
-        float currentMP = _stats.GetStatValue(PlayerStatType.MP);
-        _stats.SetStatValue(PlayerStatType.MP, Mathf.Min(currentMP + value, maxMP));
+        float maxMP = _playerStat.GetStatValue(PlayerStatType.MaxMP);
+        float currentMP = _playerStat.GetStatValue(PlayerStatType.MP);
+        _playerStat.SetStatValue(PlayerStatType.MP, Mathf.Min(currentMP + value, maxMP));
     }
     public void SpeedUp(float speed)
     {
         //float currentSpeed = _stats.GetStatValue(PlayerStatType.Speed);
         //_stats.SetStatValue(PlayerStatType.Speed, currentSpeed + speed);
-        _stats.ModifyStat(PlayerStatType.Speed, speed);
+        _playerStat.ModifyStat(PlayerStatType.Speed, speed);
     }
     public void TakeDamage(int damage)
     {
-        float currentHP = _stats.GetStatValue(PlayerStatType.HP);
-        _stats.SetStatValue(PlayerStatType.HP, Mathf.Max(currentHP - damage, 0));
+        float currentHP = _playerStat.GetStatValue(PlayerStatType.HP);
+        _playerStat.SetStatValue(PlayerStatType.HP, Mathf.Max(currentHP - damage, 0));
     }
     public void Hit()
     {
-        float baseAttack = _stats.GetStatValue(PlayerStatType.Attack);
-        float critChance = _stats.GetStatValue(PlayerStatType.CriticalChance);
-        float critDamage = _stats.GetStatValue(PlayerStatType.CriticalDamage);
+        float baseAttack = _playerStat.GetStatValue(PlayerStatType.Attack);
+        float critChance = _playerStat.GetStatValue(PlayerStatType.CriticalChance);
+        float critDamage = _playerStat.GetStatValue(PlayerStatType.CriticalDamage);
 
         bool isCrit = UnityEngine.Random.Range(0f, 100f) < critChance;
         float finalDamage = isCrit ? baseAttack * critDamage : baseAttack;
@@ -104,6 +101,7 @@ public class Player : MonoBehaviour, BaseEntity
         foreach (Collider col in hits)
         {
             BaseEntity enemy = col.GetComponent<BaseEntity>();
+
             if (enemy != null && !ReferenceEquals(enemy, this))
             {
                 enemy.TakeDamage((int)finalDamage);
@@ -113,28 +111,28 @@ public class Player : MonoBehaviour, BaseEntity
     }
     public void AttackUp(float attack)
     {
-        _stats.ModifyStat(PlayerStatType.Attack, attack);
+        _playerStat.ModifyStat(PlayerStatType.Attack, attack);
     }
 
     public void DMGReductionUp(float damageReduction)
     {
-        float currentDMGReduction = _stats.GetStatValue(PlayerStatType.DMGReduction);
-        _stats.SetStatValue(PlayerStatType.DMGReduction, currentDMGReduction + damageReduction);
+        float currentDMGReduction = _playerStat.GetStatValue(PlayerStatType.DMGReduction);
+        _playerStat.SetStatValue(PlayerStatType.DMGReduction, currentDMGReduction + damageReduction);
     }
     public void CriticalChanceUp(float criticalChance)
     {
-        float currentCriticalChance = _stats.GetStatValue(PlayerStatType.CriticalChance);
-        _stats.SetStatValue(PlayerStatType.CriticalChance, currentCriticalChance + criticalChance);
+        float currentCriticalChance = _playerStat.GetStatValue(PlayerStatType.CriticalChance);
+        _playerStat.SetStatValue(PlayerStatType.CriticalChance, currentCriticalChance + criticalChance);
     }
     public void CriticalDamageUp(float criticalDamage)
     {
-        float currentCriticalDamage = _stats.GetStatValue(PlayerStatType.CriticalDamage);
-        _stats.SetStatValue(PlayerStatType.CriticalDamage, currentCriticalDamage + criticalDamage);
+        float currentCriticalDamage = _playerStat.GetStatValue(PlayerStatType.CriticalDamage);
+        _playerStat.SetStatValue(PlayerStatType.CriticalDamage, currentCriticalDamage + criticalDamage);
     }
 
     public bool IsDead()
     {
-        return _stats.GetStatValue(PlayerStatType.HP) <= 0f;
+        return _playerStat.GetStatValue(PlayerStatType.HP) <= 0f;
     }
 
     //public float GetCurrentHP()
