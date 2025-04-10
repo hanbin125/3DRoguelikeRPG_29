@@ -20,11 +20,12 @@ public interface BaseEntity
 public class Player : MonoBehaviour, BaseEntity
 {
     [SerializeField] private PlayerStatData statData;
-
     public PlayerStat _playerStat;
 
     [SerializeField] FloatingJoystick _floatingJoystick;
     [SerializeField] Rigidbody _rb;
+    [SerializeField] private LayerMask obstacleLayer;
+    public float lastFlashTime = -Mathf.Infinity;
 
     private CurrencyManager currency;
     public CurrencyManager Currency => currency;
@@ -128,6 +129,28 @@ public class Player : MonoBehaviour, BaseEntity
     {
         float currentCriticalDamage = _playerStat.GetStatValue(PlayerStatType.CriticalDamage);
         _playerStat.SetStatValue(PlayerStatType.CriticalDamage, currentCriticalDamage + criticalDamage);
+    }
+
+    public void Dash()
+    {
+        if (Time.time >= lastFlashTime + 5)
+        {
+            Vector3 direction = Vector3.forward * _floatingJoystick.Vertical + Vector3.right * _floatingJoystick.Horizontal;
+            direction = direction.normalized;
+
+            Vector3 targetPos = transform.position + direction * 5;
+            //레이
+            if (!Physics.Raycast(transform.position, direction, 5, obstacleLayer))
+            {
+                _rb.MovePosition(targetPos);
+                lastFlashTime = Time.time;
+                Debug.Log("Flash!");
+            }
+        }
+        else
+        {
+            Debug.Log("Flash blocked by obstacle.");
+        }
     }
 
     public bool IsDead()
