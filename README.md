@@ -6,7 +6,7 @@
 - 튜토리얼
     
 ![image](https://github.com/user-attachments/assets/cd7e5280-55a1-4ca4-b5b2-07a79c6ff746)
-https://www.notion.so/teamsparta/2002dc3ef51480728d1afe072ff78008?source=copy_link#2022dc3ef514806f99eada8449bfa68c
+
 ![image](https://github.com/user-attachments/assets/46e1f83d-10ed-4f01-b004-8be8526b5d16)
 ![image](https://github.com/user-attachments/assets/bfc396c9-0b00-40cb-bf66-a39c1473cb67)
 ![image](https://github.com/user-attachments/assets/983712cf-70c1-4edb-98ac-050d3160dc4d)
