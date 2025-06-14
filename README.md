@@ -6,8 +6,19 @@
 - 튜토리얼
     
 ![image](https://github.com/user-attachments/assets/cd7e5280-55a1-4ca4-b5b2-07a79c6ff746)
+https://www.notion.so/teamsparta/2002dc3ef51480728d1afe072ff78008?source=copy_link#2022dc3ef514806f99eada8449bfa68c
+![image](https://github.com/user-attachments/assets/46e1f83d-10ed-4f01-b004-8be8526b5d16)
+![image](https://github.com/user-attachments/assets/bfc396c9-0b00-40cb-bf66-a39c1473cb67)
+![image](https://github.com/user-attachments/assets/983712cf-70c1-4edb-98ac-050d3160dc4d)
+![image](https://github.com/user-attachments/assets/a552ecac-271a-4743-a5f7-053b6bd9f802)
+![image](https://github.com/user-attachments/assets/9f4279cb-be7c-4bbf-97c6-d1d403d06449)
+![image](https://github.com/user-attachments/assets/09f76dea-0c0c-4773-8e03-dd5b2ab95198)
+![image](https://github.com/user-attachments/assets/6ed53a91-3185-47d2-9ac2-f4ad865fe7f3)
+![image](https://github.com/user-attachments/assets/7321b679-bd85-4272-a499-59407b7b4989)
+![image](https://github.com/user-attachments/assets/825ca2d7-400f-4076-b7e5-500d5f5349b7)
+![image](https://github.com/user-attachments/assets/3a8d08d2-ed14-4494-b72c-24492590f2d9)
+![image](https://github.com/user-attachments/assets/698c9d40-3f9c-46c0-95af-80094fc17a5c)
 
-    
 
 ---
 
